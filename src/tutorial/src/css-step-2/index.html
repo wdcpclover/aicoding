@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>盒模型</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; background: #fafafa; }
+
+        .box {
+            width: 240px;
+            background: #fff;
+            border: 2px solid #42b883;
+            margin: 16px;
+        }
+        /* 内边距大：内容被往里撑开 */
+        .pad-big { padding: 30px; }
+        /* 内边距小 */
+        .pad-small { padding: 6px; }
+        /* 粗边框 */
+        .border-thick { border: 8px solid #35495e; padding: 16px; }
+    </style>
+</head>
+<body>
+    <div class="box pad-big">padding: 30px（内边距大）</div>
+    <div class="box pad-small">padding: 6px（内边距小）</div>
+    <div class="box border-thick">border: 8px（粗边框）</div>
+</body>
+</html>

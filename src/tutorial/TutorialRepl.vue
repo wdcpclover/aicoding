@@ -35,6 +35,8 @@ const preferSFC = inject('prefer-sfc') as Ref<boolean>
 // 篇序：JS → TS → Vue → 路由 → Pinia → 前后端 → 项目实战（学生学习路径）
 // review 篇单列在最后，是考前复习的整合演练，不算正式学习路径
 const TRACKS = [
+  { id: 'html', label: 'HTML 篇' },
+  { id: 'css', label: 'CSS 篇' },
   { id: 'js', label: 'JavaScript 篇' },
   { id: 'ts', label: 'TypeScript 篇' },
   { id: 'vue', label: 'Vue 篇' },
@@ -46,7 +48,7 @@ const TRACKS = [
 ] as const
 type TrackId = typeof TRACKS[number]['id']
 
-const STEP_RE = /^(js|ts|vue|router|pinia|api|proj|review)-step-(\d+)$/
+const STEP_RE = /^(html|css|js|ts|vue|router|pinia|api|proj|review)-step-(\d+)$/
 
 function parseStep(key: string): { track: TrackId; num: number } | null {
   const m = key.match(STEP_RE)

@@ -4,3 +4,8 @@
 @import "./inline-demo.css";
 @import "./utilities.css";
 @import "./style-guide.css";
+
+/* AICoding：隐藏左上角 Vue.js logo/标题，腾出导航空间 */
+.VPNavBarTitle {
+  display: none !important;
+}

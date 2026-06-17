@@ -9,8 +9,23 @@ import { headerPlugin } from './headerMdPlugin'
 const nav: ThemeConfig['nav'] = [
   {
     text: '导论',
-    link: '/intro/',
-    activeMatch: `^/intro/`
+    link: '/',
+    activeMatch: `^/$`
+  },
+  {
+    text: '网络基础',
+    link: '/network/',
+    activeMatch: `^/network/`
+  },
+  {
+    text: 'HTML 教程',
+    link: '/tutorial/#html-step-1',
+    activeMatch: `^/tutorial/`
+  },
+  {
+    text: 'CSS 教程',
+    link: '/tutorial/#css-step-1',
+    activeMatch: `^/tutorial/`
   },
   {
     text: 'JS 教程',
@@ -46,32 +61,6 @@ const nav: ThemeConfig['nav'] = [
     text: '项目教程',
     link: '/tutorial/#proj-step-1',
     activeMatch: `^/tutorial/`
-  },
-  {
-    text: '🔥 考前复习',
-    link: '/tutorial/#review-step-1',
-    activeMatch: `^/tutorial/`
-  },
-  {
-    text: '文档',
-    activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
-    items: [
-      { text: '深度指南', link: '/guide/introduction' },
-      { text: '互动教程', link: '/tutorial/' },
-      { text: '示例', link: '/examples/' },
-      { text: '快速上手', link: '/guide/quick-start' },
-      // { text: '风格指南', link: '/style-guide/' },
-      { text: '术语表', link: '/glossary/' },
-      { text: '错误码参照表', link: '/error-reference/' },
-      {
-        text: 'Vue 2 文档',
-        link: 'https://v2.cn.vuejs.org'
-      },
-      {
-        text: '从 Vue 2 迁移',
-        link: 'https://v3-migration.vuejs.org/'
-      }
-    ]
   },
   {
     text: 'API',
