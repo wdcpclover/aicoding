@@ -1,0 +1,42 @@
+<div class="page">
+  <h2>🧪 Express 路由匹配模拟器</h2>
+  <p class="muted">改下面的方法 / 路径 / body，看后端会命中哪条路由、req 里各是什么。</p>
+
+  <div class="req">
+    <div class="line">
+      <select v-model="method">
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+        <option>DELETE</option>
+      </select>
+      <input v-model="url" placeholder="/api/products/2?keyword=book">
+    </div>
+    <textarea v-if="method === 'POST' || method === 'PUT'" v-model="bodyText" rows="4"></textarea>
+  </div>
+
+  <div class="res" :class="result.status === 200 ? 'ok' : 'err'">
+    <template v-if="result.matched">
+      <p class="hit">✅ 命中路由：<code>{{ result.matched }}</code></p>
+      <p class="kv">req.params <small>(路径里的 :id)</small></p>
+      <pre>{{ result.params }}</pre>
+      <p class="kv">req.query <small>(? 后面的)</small></p>
+      <pre>{{ result.query }}</pre>
+      <template v-if="method === 'POST' || method === 'PUT'">
+        <p class="kv">req.body <small>(请求体，需 express.json())</small></p>
+        <pre v-if="!result.bodyErr">{{ result.body }}</pre>
+        <pre v-else class="bad">{{ result.bodyErr }}</pre>
+      </template>
+    </template>
+    <p v-else class="hit">❌ 404 没有路由匹配 <code>{{ method }} {{ url.split('?')[0] }}</code></p>
+  </div>
+
+  <div class="table">
+    <p class="kv">这个假后端的路由表：</p>
+    <ul>
+      <li v-for="r in routes" :key="r.method + r.pattern">
+        <b>{{ r.method }}</b> <code>{{ r.pattern }}</code>
+      </li>
+    </ul>
+  </div>
+</div>

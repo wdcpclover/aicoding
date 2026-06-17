@@ -1,0 +1,36 @@
+<div style="font-family: 'Microsoft YaHei', sans-serif; padding: 24px; line-height: 1.8;">
+  <h1>组件外使用 Store</h1>
+
+  <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0; font-family: monospace; font-size: 14px;">
+    isLoggedIn = <strong style="color: #42b983;">{{ isLoggedIn }}</strong><br>
+    user       = {{ user ? user.name : 'null' }}<br>
+    token      = {{ token || '(空)' }}
+  </div>
+
+  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <button v-if="!isLoggedIn" @click="login()" style="padding: 8px 16px; cursor: pointer; background: #42b983; color: white; border: none; border-radius: 4px;">
+      登录（模拟）
+    </button>
+    <button v-if="isLoggedIn" @click="logout()" style="padding: 8px 16px; cursor: pointer; background: #f08d49; color: white; border: none; border-radius: 4px;">
+      登出
+    </button>
+  </div>
+
+  <hr style="margin: 24px 0; border: 0; border-top: 1px solid #eee;">
+
+  <h3>调用普通 JS 模块的工具函数（authUtils.js）</h3>
+  <p style="font-size: 14px; color: #666;">
+    这些函数<strong>不是 Vue 组件</strong>，只是普通 JS 模块。它们内部用 <code>useAuthStore()</code> 读取登录态。
+  </p>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <button @click="tryAction('删除文章')" style="padding: 8px 16px; cursor: pointer;">尝试删除文章</button>
+    <button @click="tryAction('查看后台')" style="padding: 8px 16px; cursor: pointer;">尝试查看后台</button>
+    <button @click="showHeader()" style="padding: 8px 16px; cursor: pointer;">查看请求头</button>
+  </div>
+
+  <h3 style="margin-top: 24px;">日志</h3>
+  <div style="background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 13px; min-height: 80px; max-height: 220px; overflow-y: auto;">
+    <div v-for="(line, i) in log.slice(0, 8)" :key="i">{{ line }}</div>
+    <div v-if="log.length === 0" style="color: #666;">（先登录或登出，然后点上面的按钮）</div>
+  </div>
+</div>

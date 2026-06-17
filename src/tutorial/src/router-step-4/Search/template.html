@@ -1,0 +1,15 @@
+<div>
+  <h3>🔍 搜索</h3>
+
+  <div class="form-row">
+    <input v-model="keyword" placeholder="输入关键字" @keyup.enter="search" />
+    <button class="btn" @click="search">搜索</button>
+  </div>
+
+  <p>当前 query：<code>{{ JSON.stringify($route.query) }}</code></p>
+  <p v-if="$route.query.q">搜索关键字：<strong>{{ $route.query.q }}</strong></p>
+
+  <p style="font-size: 12px; color: #888;">
+    💡 提交后 URL 变成 <code>/search?q=xxx</code>，<code>$route.query.q</code> 可以读出来。
+  </p>
+</div>

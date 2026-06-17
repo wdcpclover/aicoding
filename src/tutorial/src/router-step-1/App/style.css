@@ -1,0 +1,51 @@
+.nav {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.nav a {
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #42b883;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.nav a:hover {
+  background: #e9f7ef;
+}
+
+.nav a.router-link-active {
+  background: #42b883;
+  color: #fff;
+}
+
+.page {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 100px;
+}
+
+.page h3 {
+  margin: 0 0 8px;
+  color: #42b883;
+}
+
+.page p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.page code {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #c41d7f;
+}

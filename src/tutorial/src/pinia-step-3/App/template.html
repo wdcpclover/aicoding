@@ -1,0 +1,48 @@
+<div style="font-family: 'Microsoft YaHei', sans-serif; padding: 24px; line-height: 1.8;">
+  <h1>State：读、写、$patch、$reset、$subscribe</h1>
+
+  <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0; font-family: monospace; font-size: 14px;">
+    name        = "<strong style="color: #42b983;">{{ name }}</strong>"<br>
+    isAdmin     = <strong>{{ isAdmin }}</strong><br>
+    items       = [<strong style="color: #f08d49;">{{ items.join(', ') }}</strong>]<br>
+    profile.age = <strong>{{ profile.age }}</strong>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+    <button @click="changeName()" style="padding: 8px 16px; cursor: pointer;">
+      直接赋值 name
+    </button>
+    <button @click="patchObj()" style="padding: 8px 16px; cursor: pointer;">
+      $patch 对象（改 2 个字段）
+    </button>
+    <button @click="patchFn()" style="padding: 8px 16px; cursor: pointer;">
+      $patch 函数（改 3 处）
+    </button>
+    <button @click="resetAll()" style="padding: 8px 16px; cursor: pointer; background: #f08d49; color: white; border: none; border-radius: 4px;">
+      $reset
+    </button>
+  </div>
+
+  <h3 style="margin-top: 28px; display: flex; align-items: center; justify-content: space-between;">
+    <span>🔔 $subscribe 监听日志（最近 8 条）</span>
+    <button
+      @click="clearLog()"
+      style="font-size: 12px; padding: 4px 10px; cursor: pointer; background: transparent; border: 1px solid #ccc; border-radius: 4px;"
+    >
+      清空
+    </button>
+  </h3>
+
+  <p style="font-size: 13px; color: #666; margin: 4px 0 8px;">
+    每点一次按钮就会触发一次 <code>$subscribe</code>。注意：<strong>$patch 即使改多个字段，也只触发一次</strong>（看 type 列）。
+  </p>
+
+  <div style="background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 12px; min-height: 80px; max-height: 240px; overflow-y: auto;">
+    <div v-if="log.length === 0" style="color: #666;">（点上面任意按钮，看 $subscribe 拦到的事件）</div>
+    <div v-for="(entry, i) in log.slice(0, 8)" :key="i" style="padding: 2px 0;">
+      <span style="color: #9cdcfe;">[{{ entry.time }}]</span>
+      <span style="color: #c586c0;">type=</span><span style="color: #ce9178;">{{ entry.type }}</span>
+      <span style="color: #6a9955;">  → </span>{{ entry.snapshot }}
+    </div>
+  </div>
+</div>

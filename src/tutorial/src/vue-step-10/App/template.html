@@ -1,0 +1,48 @@
+<h2>生命周期钩子演示</h2>
+
+<!-- 操作区：触发更新 -->
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+  <h4 style="margin: 0 0 8px;">触发更新（beforeUpdate → updated）</h4>
+  <button @click="count++">计数器 +1（当前: {{ count }}）</button>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    每次点击改变响应式数据 → 触发 DOM 重新渲染 → beforeUpdate + updated 成对出现
+  </p>
+</div>
+
+<!-- 操作区：挂载/卸载子组件 -->
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+  <h4 style="margin: 0 0 8px;">挂载 / 卸载子组件（mount ↔ unmount）</h4>
+  <button @click="showChild = !showChild">
+    {{ showChild ? '卸载子组件' : '挂载子组件' }}
+  </button>
+  <ChildComp v-if="showChild" :add-log="addLog" />
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    v-if 切换组件 → 挂载时触发创建+挂载钩子，移除时触发卸载钩子
+  </p>
+</div>
+
+<!-- 日志面板 -->
+<div style="background: #1e1e1e; border-radius: 8px; padding: 12px; margin-bottom: 8px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+    <span style="color: #888; font-size: 12px; font-family: monospace;">📋 生命周期日志（共 {{ logs.length }} 条）</span>
+    <button @click="clearLogs" style="font-size: 11px; padding: 2px 8px; cursor: pointer;">清除</button>
+  </div>
+  <div style="max-height: 260px; overflow-y: auto; font-family: monospace; font-size: 12px; line-height: 1.8;">
+    <div v-if="logs.length === 0" style="color: #666;">暂无日志，页面加载或操作按钮后这里会显示钩子触发记录</div>
+    <div
+      v-for="(log, i) in logs"
+      :key="i"
+      :style="{
+        color: log.indexOf('子组件') > -1 ? '#64b5f6' : '#a5d6a7',
+        borderBottom: '1px solid #333',
+        padding: '2px 0'
+      }"
+    >
+      {{ log }}
+    </div>
+  </div>
+</div>
+
+<p style="color: #888; font-size: 11px; margin: 0;">
+  🟢 绿色 = App 钩子 &nbsp; 🔵 蓝色 = 子组件钩子 &nbsp;｜ 也可打开浏览器控制台查看 console.log 输出
+</p>

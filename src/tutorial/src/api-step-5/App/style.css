@@ -1,0 +1,226 @@
+.panel {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 16px;
+  max-width: 920px;
+}
+.panel h2 { margin: 8px 0 4px; font-size: 17px; }
+.panel .lead { margin: 0 0 14px; color: #666; font-size: 13px; }
+.panel code { font-size: 12px; background: #eef1f5; padding: 1px 5px; border-radius: 3px; color: #c44323; }
+.panel .kbd {
+  font-family: monospace;
+  font-size: 10px;
+  background: #1e293b;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* —— 健康检查条 —— */
+.health {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 6px; font-size: 13px;
+  border: 1px solid; margin-bottom: 12px;
+}
+.health .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.health b { font-weight: 600; }
+.health .hint { color: inherit; opacity: 0.7; font-size: 12px; }
+.health .recheck {
+  margin-left: auto; font-size: 12px; padding: 2px 8px;
+  border-radius: 4px; border: 1px solid currentColor;
+  background: transparent; color: inherit; cursor: pointer;
+}
+.health.checking { background: #f5f7fa; border-color: #d1d5db; color: #6b7280; }
+.health.checking .dot { background: #9ca3af; }
+.health.ok       { background: #ecfdf5; border-color: #34d399; color: #047857; }
+.health.ok .dot  { background: #10b981; }
+.health.down     { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.health.down .dot{ background: #ef4444; }
+
+/* —— 共享 loading 条（横跨左右） —— */
+.shared-loading {
+  position: relative;
+  height: 22px;
+  border-radius: 4px;
+  background: #f5f7fa;
+  border: 1px solid #e3e8ee;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.shared-loading .label {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #6b7280;
+  font-family: monospace;
+}
+.shared-loading .bar-inner {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, #42b883 0%, #34d399 100%);
+  transition: width 0.3s ease;
+}
+.shared-loading.active .bar-inner {
+  width: 100%;
+  animation: pulse-bar 1.2s ease-in-out infinite;
+}
+.shared-loading.active .label { color: #fff; }
+@keyframes pulse-bar {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.error {
+  margin: 0 0 12px; padding: 8px 12px;
+  background: #fef2f2; border-left: 3px solid #ef4444;
+  border-radius: 0 4px 4px 0; color: #b91c1c; font-size: 13px;
+}
+
+/* —— 双栏 —— */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 760px) {
+  .grid { grid-template-columns: 1.3fr 1fr; }
+}
+
+.card {
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e3e8ee;
+}
+.card-head h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1858b0;
+}
+.card-head .mini {
+  padding: 4px 10px;
+  font-size: 11px;
+  border: 1px solid #42b883;
+  background: #42b883;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.card-head .mini:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* —— 新增表单 —— */
+.create-form {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.create-form input {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  outline: none;
+  flex: 1;
+  min-width: 90px;
+}
+.create-form input:focus { border-color: #42b883; }
+.create-form button {
+  padding: 4px 12px;
+  font-size: 12px;
+  border: 1px solid #42b883;
+  background: #42b883;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.create-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* —— 列表 —— */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.user-table th, .user-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+.user-table th { background: #fafbfc; color: #555; font-weight: 500; }
+.user-table tr.active { background: #eef6ff; }
+
+.ops { display: flex; gap: 4px; }
+.mini {
+  padding: 3px 8px;
+  font-size: 11px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.mini:hover { background: #f5f7fa; }
+.mini.danger { color: #c4302b; border-color: #fca5a5; }
+.mini.danger:hover { background: #fef2f2; }
+
+.empty {
+  padding: 24px;
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+}
+.stat {
+  padding: 8px 12px;
+  background: #fafbfc;
+  border-top: 1px solid #f0f0f0;
+  font-size: 11px;
+  color: #555;
+  margin: 0;
+}
+.stat b { color: #1858b0; }
+
+/* —— 详情 —— */
+.detail {
+  padding: 14px;
+}
+.detail .row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  margin: 0;
+}
+.detail .row span {
+  width: 80px;
+  font-size: 11px;
+  color: #999;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+.detail .row b {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+}
+
+.tip {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.8;
+  background: #fffbeb;
+  padding: 10px 14px;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 4px 4px 0;
+}

@@ -1,0 +1,9 @@
+<div>
+  <h3>📇 用户详情</h3>
+  <p>当前 ID：<code>{{ id }}</code></p>
+  <p>姓名：<strong>{{ user ? user.name : '未知用户' }}</strong></p>
+  <p style="font-size: 12px; color: #888;">
+    跳转次数：{{ visitCount }}（切换 /users/1 ↔ /users/2 观察：组件复用，只是参数变）
+  </p>
+  <RouterLink to="/">← 返回列表</RouterLink>
+</div>

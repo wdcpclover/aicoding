@@ -1,0 +1,65 @@
+<h2>一、基础计算属性</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>作者:</strong> {{ author.name }}</p>
+  <p><strong>有书吗:</strong> {{ hasBooks }}</p>
+  <p><strong>书籍数量:</strong> {{ bookCount }} 本</p>
+  <ul>
+    <li v-for="(book, i) in author.books" :key="i">
+      {{ book }}
+      <button @click="author.books.splice(i, 1)" style="margin-left: 4px; font-size: 11px;">✕</button>
+    </li>
+  </ul>
+  <div style="display: flex; gap: 8px;">
+    <input v-model="newBookTitle" placeholder="输入新书名" @keyup.enter="addBook" style="flex: 1;" />
+    <button @click="addBook">添加</button>
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 添加/删除书籍，观察 hasBooks 和 bookCount 自动更新
+  </p>
+</div>
+
+<h2>二、计算属性缓存 vs 方法</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>computed 结果:</strong> {{ computedBookInfo }}</p>
+  <p><strong>method 结果:</strong> {{ methodBookInfo() }}</p>
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <button @click="renderTrigger++">触发重新渲染 (不改变 books)</button>
+  </div>
+  <p style="background: #e3f2fd; padding: 8px; border-radius: 4px; font-size: 12px; margin-top: 8px; color: #1565c0;">
+    👀 <strong>打开浏览器控制台 (F12)</strong> 观察：<br/>
+    · 点击"触发重新渲染" → 只有 🔧 method 打印日志，📦 computed 没有（因为 books 没变，返回缓存）<br/>
+    · 上方添加/删除书籍 → 两者都会打印（因为 books 变了，computed 重新计算）
+  </p>
+</div>
+
+<h2>三、可写计算属性</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>fullName (computed):</strong> {{ fullName }}</p>
+  <div style="display: flex; gap: 8px; align-items: center; margin: 8px 0;">
+    <label>firstName:</label>
+    <input v-model="firstName" style="width: 80px;" />
+    <label>lastName:</label>
+    <input v-model="lastName" style="width: 80px;" />
+  </div>
+  <button @click="setFullName">设为 "Li Ming"</button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 修改输入框 → fullName 自动更新；点击按钮 → firstName/lastName 被拆分赋值
+  </p>
+</div>
+
+<h2>四、获取上一个值 (3.4+)</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>count:</strong> {{ count }}</p>
+  <p><strong>alwaysSmall:</strong> {{ alwaysSmall }}
+    <span v-if="count > 3" style="color: #e65100; font-size: 12px;">（已锁定，count &gt; 3）</span>
+    <span v-else style="color: #2e7d32; font-size: 12px;">（正常跟踪中）</span>
+  </p>
+  <div style="display: flex; gap: 8px;">
+    <button @click="count++">count++</button>
+    <button @click="count--">count--</button>
+    <button @click="count = 0">重置为 0</button>
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 count ≤ 3 时 alwaysSmall 跟随变化，超过 3 则"冻结"在上一个值
+  </p>
+</div>

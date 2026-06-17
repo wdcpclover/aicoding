@@ -1,0 +1,78 @@
+<div class="panel">
+  <div class="health" :class="health.status">
+    <span class="dot"></span>
+    <b>{{ health.label }}</b>
+    <span class="hint">{{ health.hint }}</span>
+    <button class="recheck" @click="checkHealth">重新检查</button>
+  </div>
+
+  <h2>共享 store：左右两栏看同一份数据</h2>
+  <p class="lead">两栏读的是<b>同一个 <code>userStore</code></b>，loading 同步、list 同步、修改即时反映。</p>
+
+  <!-- 共享 loading 条 -->
+  <div class="shared-loading" :class="{ active: loading }">
+    <div class="bar-inner"></div>
+    <span class="label">storeToRefs(userStore).loading = {{ loading }}</span>
+  </div>
+
+  <p v-if="error" class="error">⚠️ {{ error }}</p>
+
+  <div class="grid">
+    <!-- 左栏：列表 -->
+    <section class="card">
+      <header class="card-head">
+        <h3>📋 列表组件 <span class="kbd">UserList</span></h3>
+        <button class="mini" @click="fetchList" :disabled="loading">🔄 刷新</button>
+      </header>
+
+      <form class="create-form" @submit.prevent="onCreate">
+        <input v-model="form.name"  placeholder="姓名"   required>
+        <input v-model="form.email" placeholder="邮箱"   type="email" required>
+        <input v-model.number="form.age" placeholder="年龄" type="number" style="width: 70px">
+        <button type="submit" :disabled="loading">➕</button>
+      </form>
+
+      <table v-if="list.length" class="user-table">
+        <thead>
+          <tr><th>ID</th><th>姓名</th><th>年龄</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="u in list" :key="u.id" :class="{ active: current && current.id === u.id }">
+            <td>#{{ u.id }}</td>
+            <td>{{ u.name }}</td>
+            <td>{{ u.age }}</td>
+            <td class="ops">
+              <button class="mini" @click="onView(u.id)">👁</button>
+              <button class="mini" @click="onAgePlus(u)">🎂</button>
+              <button class="mini danger" @click="onRemove(u)">🗑</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-else class="empty">{{ loading ? '加载中...' : '点上面 🔄 开始' }}</p>
+      <p class="stat">共 <b>{{ total }}</b> 人</p>
+    </section>
+
+    <!-- 右栏：详情 -->
+    <section class="card">
+      <header class="card-head">
+        <h3>👁 详情组件 <span class="kbd">UserDetail</span></h3>
+      </header>
+
+      <div v-if="loading && !current" class="empty">加载中...</div>
+      <div v-else-if="current" class="detail">
+        <p class="row"><span>id</span>     <b>#{{ current.id }}</b></p>
+        <p class="row"><span>name</span>   <b>{{ current.name }}</b></p>
+        <p class="row"><span>email</span>  <b>{{ current.email }}</b></p>
+        <p class="row"><span>age</span>    <b>{{ current.age }}</b></p>
+      </div>
+      <div v-else class="empty">点列表里某个用户的 👁 查看详情</div>
+    </section>
+  </div>
+
+  <p class="tip">
+    💡 两栏的 <code>list</code> / <code>current</code> / <code>loading</code> 都来自 <code>storeToRefs(useUserStore())</code> —— 同一份引用。<br>
+    💡 在列表里点 🎂 → 右边详情面板的年龄**自动跟着变**（如果当前正显示这个用户）。<br>
+    💡 数据真的落到后端内存里：刷新前端页面后还在；**Ctrl+C 重启后端**才会恢复初始 3 条。
+  </p>
+</div>

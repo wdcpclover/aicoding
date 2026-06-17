@@ -1,0 +1,21 @@
+<div style="font-family: 'Microsoft YaHei', sans-serif; padding: 24px; line-height: 1.8;">
+  <h1>定义 Store：两种等价语法</h1>
+
+  <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0; font-family: monospace; font-size: 15px;">
+    name        = <strong>"{{ name }}"</strong>  <span style="color: #999;">（state）</span><br>
+    count       = <strong style="color: #42b983; font-size: 22px;">{{ count }}</strong>  <span style="color: #999;">（state）</span><br>
+    doubleCount = <strong style="color: #f08d49; font-size: 22px;">{{ doubleCount }}</strong>  <span style="color: #999;">（getter: count * 2）</span>
+  </div>
+
+  <button
+    @click="increment()"
+    style="padding: 10px 24px; font-size: 16px; cursor: pointer; background: #42b983; color: white; border: none; border-radius: 6px;"
+  >
+    increment（count + 1）
+  </button>
+
+  <p style="margin-top: 24px; color: #666; font-size: 14px;">
+    点按钮，count 自增，doubleCount 自动重算。<br>
+    切换右上角 toggle，看左侧 store 文件在 Setup ↔ Options 两种语法间切换 —— 行为完全一致。
+  </p>
+</div>

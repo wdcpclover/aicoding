@@ -1,0 +1,27 @@
+<div class="page">
+  <h2>📋 考点自查清单</h2>
+  <p class="muted">对着试卷的 10 个文件，写完一个勾一个，看看自己能拿多少分。</p>
+
+  <div class="progress">
+    <div class="bar" :style="{ width: percent + '%' }"></div>
+    <span class="label">{{ doneScore }} / {{ totalScore }} 分（{{ percent }}%）</span>
+  </div>
+
+  <ul class="files">
+    <li v-for="f in files" :key="f.name" :class="{ done: f.done }">
+      <label>
+        <input type="checkbox" v-model="f.done">
+        <span class="fname">{{ f.name }}</span>
+        <span class="pts">{{ f.score }}分</span>
+      </label>
+      <p class="note">{{ f.note }}</p>
+    </li>
+  </ul>
+
+  <button class="ghost" @click="reset">重置</button>
+
+  <p class="tip">
+    💡 这 10 个文件，前端 8 个在前 5 步都演练过了；后端 2 个（server / database）看左边讲解。<br>
+    💡 评分是<b>按文件给分</b>的——哪怕某个文件没全对，写出核心结构也能拿大部分分。先把骨架全搭起来！
+  </p>
+</div>

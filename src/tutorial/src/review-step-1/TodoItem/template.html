@@ -1,0 +1,5 @@
+<li class="todo" :class="{ done: todo.done }">
+  <input type="checkbox" :checked="todo.done" @change="onToggle">
+  <span class="text">{{ todo.text }}</span>
+  <button class="del" @click="onRemove">×</button>
+</li>

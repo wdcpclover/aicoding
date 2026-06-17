@@ -1,0 +1,160 @@
+.panel {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 16px;
+  max-width: 820px;
+}
+.panel h2 { margin: 8px 0 4px; font-size: 18px; }
+.panel .lead { margin: 0 0 14px; color: #666; font-size: 13px; }
+.panel code { font-size: 12px; background: #eef1f5; padding: 1px 5px; border-radius: 3px; color: #c44323; }
+
+/* —— 健康检查条 —— */
+.health {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid;
+  margin-bottom: 12px;
+}
+.health .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.health b { font-weight: 600; }
+.health .hint { color: inherit; opacity: 0.7; font-size: 12px; }
+.health .recheck {
+  margin-left: auto; font-size: 12px; padding: 2px 8px;
+  border-radius: 4px; border: 1px solid currentColor;
+  background: transparent; color: inherit; cursor: pointer;
+}
+.health.checking { background: #f5f7fa; border-color: #d1d5db; color: #6b7280; }
+.health.checking .dot { background: #9ca3af; }
+.health.ok       { background: #ecfdf5; border-color: #34d399; color: #047857; }
+.health.ok .dot  { background: #10b981; }
+.health.down     { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.health.down .dot{ background: #ef4444; }
+
+.actions {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px;
+}
+.actions button {
+  padding: 6px 14px; font-size: 13px; border: 1px solid;
+  border-radius: 4px; cursor: pointer; color: white;
+}
+.actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+.actions .warn   { background: #c46a18; border-color: #c46a18; }
+.actions .danger { background: #c4302b; border-color: #c4302b; }
+.actions .gray   { background: #6b7280; border-color: #6b7280; }
+
+.status { color: #888; font-size: 13px; }
+
+/* —— 三态面板 —— */
+.three-state {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.state-block {
+  border: 1px solid #e3e8ee;
+  border-radius: 5px;
+  padding: 10px 12px;
+  background: #fafbfc;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.state-block .label {
+  font-family: monospace;
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: #eef1f5;
+  align-self: flex-start;
+}
+.state-block .label.active.loading-label { background: #fef3c7; color: #92400e; }
+.state-block .label.active.error-label   { background: #fee2e2; color: #b91c1c; }
+.state-block .label.active.data-label    { background: #d1fae5; color: #047857; }
+.state-block .val {
+  font-size: 12px;
+  color: #333;
+  word-break: break-all;
+}
+
+/* —— err 解剖图 —— */
+.card {
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.card h3 {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 1px solid;
+}
+.card.shape-response h3 { background: #fff1ed; color: #c44323; border-color: #fbcdb8; }
+.card.shape-request  h3 { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+.card.shape-config   h3 { background: #fafbfc; color: #555; border-color: #e3e8ee; }
+
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.card th, .card td {
+  text-align: left;
+  vertical-align: top;
+  padding: 6px 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.card th {
+  width: 160px;
+  font-weight: 500;
+  color: #555;
+  background: #fafbfc;
+}
+.card td.wrap { word-break: break-all; }
+.card pre {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.muted   { color: #aaa; font-style: italic; font-family: monospace; }
+.ok-mark { color: #047857; font-family: monospace; }
+
+.diagnosis {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  background: #fffbeb;
+  border-top: 1px solid #fde68a;
+  color: #92400e;
+  line-height: 1.6;
+}
+
+/* —— try/catch 代码折叠 —— */
+.raw {
+  margin-top: 16px;
+  border: 1px dashed #d1d5db;
+  border-radius: 6px;
+  padding: 10px 14px;
+  background: #fafbfc;
+}
+.raw summary { cursor: pointer; font-size: 12px; color: #555; }
+.raw pre {
+  margin: 10px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 10px 14px;
+  border-radius: 4px;
+  overflow: auto;
+}

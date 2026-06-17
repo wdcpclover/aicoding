@@ -1,0 +1,94 @@
+.nav {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #42b883;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.nav a:hover {
+  background: #e9f7ef;
+}
+
+.nav a.router-link-active {
+  background: #42b883;
+  color: #fff;
+}
+
+.page {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 100px;
+}
+
+.page h3 {
+  margin: 0 0 8px;
+  color: #42b883;
+}
+
+.page p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.page code {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #c41d7f;
+}
+
+.sub-nav {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.sub-nav a {
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #666;
+  font-size: 13px;
+}
+
+.sub-nav a.router-link-exact-active {
+  background: #42b883;
+  color: #fff;
+}
+
+.sub-view {
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 6px;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  margin: 6px 0;
+}
+
+.user-list a {
+  color: #42b883;
+  text-decoration: none;
+}

@@ -1,0 +1,24 @@
+.demo-box {
+  padding: 10px 16px;
+  margin: 4px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.static {
+  background-color: #f5f5f5;
+}
+
+.active {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+  color: #1565c0;
+  font-weight: bold;
+}
+
+.text-danger {
+  color: #d32f2f !important;
+  border-color: #d32f2f !important;
+  background-color: #ffebee !important;
+}

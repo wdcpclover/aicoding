@@ -1,0 +1,89 @@
+.nav {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #42b883;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.nav a:hover {
+  background: #e9f7ef;
+}
+
+.nav a.router-link-active {
+  background: #42b883;
+  color: #fff;
+}
+
+.page {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 100px;
+}
+
+.page h3 {
+  margin: 0 0 8px;
+  color: #42b883;
+}
+
+.page p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.page code {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #c41d7f;
+}
+
+.nav a.broken {
+  color: #c41d7f;
+  border: 1px dashed #c41d7f;
+}
+
+.nav a.broken:hover {
+  background: #fff0f6;
+}
+
+.not-found {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.not-found h3 {
+  color: #c41d7f;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  margin: 6px 0;
+}
+
+.user-list a {
+  color: #42b883;
+  text-decoration: none;
+}
+
+.user-list a:hover {
+  text-decoration: underline;
+}

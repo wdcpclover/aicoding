@@ -1,0 +1,11 @@
+<h2>一、父组件渲染子组件</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>{{ parentMsg }}</strong></p>
+  <div style="border: 2px dashed #42b883; padding: 12px; border-radius: 8px; margin-top: 8px;">
+    <p style="color: #888; font-size: 12px; margin: 0 0 8px;">⬇️ 下面是子组件 ChildComp 的渲染结果：</p>
+    <ChildComp />
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 子组件被渲染在父组件模板的 &lt;ChildComp /&gt; 位置
+  </p>
+</div>

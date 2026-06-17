@@ -1,0 +1,9 @@
+<div class="card" @click="onView">
+  <div class="card-title">{{ activity.title }}</div>
+  <div class="card-row">📍 {{ activity.location }}</div>
+  <div class="card-row">🕒 {{ activity.start_time }}</div>
+  <div class="card-foot">
+    <span>👥 {{ activity.participants }} 人已报名</span>
+    <span class="go">查看 ›</span>
+  </div>
+</div>

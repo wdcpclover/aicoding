@@ -1,0 +1,13 @@
+<div>
+  <h2>👤 用户详情</h2>
+  <div class="card">
+    <p class="row">通过 props 拿到的 id：<code>{{ id }}</code></p>
+    <p class="row">route.params.id：<code>{{ route.params.id }}</code></p>
+    <p class="row">route.fullPath：<code>{{ route.fullPath }}</code></p>
+  </div>
+  <p style="margin-top:14px">
+    <button @click="next">下一个用户 ›</button>
+    <button class="ghost" @click="goHome">回首页</button>
+  </p>
+  <p class="muted">这两个按钮用的是<b>编程式导航</b> <code>router.push()</code>。</p>
+</div>

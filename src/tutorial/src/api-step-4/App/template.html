@@ -1,0 +1,52 @@
+<div class="panel">
+  <div class="health" :class="health.status">
+    <span class="dot"></span>
+    <b>{{ health.label }}</b>
+    <span class="hint">{{ health.hint }}</span>
+    <button class="recheck" @click="checkHealth">重新检查</button>
+  </div>
+
+  <h2>组件层只 import userApi，<span class="muted">看不到 axios</span></h2>
+  <p class="lead">注意 <code>App.vue</code> 顶部 <code>import { userApi }</code> —— 整个组件没出现 <code>axios</code>。</p>
+
+  <div class="actions">
+    <button @click="load"    :disabled="busy">📋 列表</button>
+    <button @click="create"  :disabled="busy">➕ 新增（随机）</button>
+    <button @click="bumpAge" :disabled="busy || !users.length">🎂 第一个 +1</button>
+    <button @click="remove"  :disabled="busy || !users.length" class="danger">🗑 删第一个</button>
+    <button @click="boom"    :disabled="busy" class="warn">💥 故意 500</button>
+    <button @click="clearLog" class="ghost">清空日志</button>
+  </div>
+
+  <div class="grid">
+    <!-- 左：用户列表 -->
+    <section class="card">
+      <h3>组件状态 <span class="kbd">App.vue</span></h3>
+      <p v-if="busy" class="status">请求中...</p>
+      <p v-else-if="errMsg" class="error">⚠️ {{ errMsg }}</p>
+      <table v-else-if="users.length" class="users">
+        <thead><tr><th>id</th><th>name</th><th>email</th><th>age</th></tr></thead>
+        <tbody>
+          <tr v-for="u in users" :key="u.id">
+            <td>{{ u.id }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.age }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-else class="empty">点"列表"开始</p>
+    </section>
+
+    <!-- 右：拦截器日志 -->
+    <section class="card">
+      <h3>拦截器实时日志 <span class="kbd">request.js</span></h3>
+      <div class="log">
+        <div v-for="(l, i) in logs" :key="i" class="line" :class="lineClass(l.line)">{{ l.line }}</div>
+        <div v-if="!logs.length" class="empty">还没有请求</div>
+      </div>
+    </section>
+  </div>
+
+  <p class="hint-line">
+    💡 <b>看出关键点了吗</b>：所有 <code>→</code>、<code>←</code>、<code>💥</code> 日志都来自 <code>request.js</code> 的拦截器——
+    <code>App.vue</code> 里**只写了 <code>userApi.xxx()</code>**，没有任何打印代码。
+  </p>
+</div>

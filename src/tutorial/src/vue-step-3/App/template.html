@@ -1,0 +1,41 @@
+<h2>一、Class 绑定 - 对象语法</h2>
+<div
+  class="static demo-box"
+  :class="{ active: isActive, 'text-danger': hasError }"
+>
+  class="static" + :class="{ active: {{ isActive }}, 'text-danger': {{ hasError }} }"
+</div>
+<div style="margin-top: 8px;">
+  <button @click="toggleActive">切换 active ({{ isActive }})</button>
+  <button @click="toggleError" style="margin-left: 8px;">切换 text-danger ({{ hasError }})</button>
+</div>
+
+<h2>二、Class 绑定 - 计算属性对象</h2>
+<div class="demo-box" :class="classObject">
+  :class="classObject" (computed)
+</div>
+
+<h2>三、Class 绑定 - 数组语法</h2>
+<div class="demo-box" :class="[activeClass, errorClass]">
+  :class="['{{ activeClass }}', '{{ errorClass }}']"
+</div>
+<p style="color: #999; font-size: 12px;">数组中嵌套三元：:class="[isActive ? activeClass : '', errorClass]"</p>
+
+<h2>四、Style 绑定 - 对象语法</h2>
+<div :style="{ color: activeColor, fontSize: fontSize + 'px' }">
+  :style="{ color: '{{ activeColor }}', fontSize: '{{ fontSize }}px' }"
+</div>
+<div style="margin-top: 8px;">
+  <button @click="changeColor">切换颜色</button>
+  <button @click="changeFontSize" style="margin-left: 8px;">切换字号</button>
+</div>
+
+<h2>五、Style 绑定 - 样式对象</h2>
+<div :style="styleObject">
+  :style="styleObject" → color + fontSize + fontWeight
+</div>
+
+<h2>六、Style 绑定 - 数组语法</h2>
+<div :style="[baseStyles, overridingStyles]">
+  :style="[baseStyles, overridingStyles]" → 合并多个样式对象
+</div>

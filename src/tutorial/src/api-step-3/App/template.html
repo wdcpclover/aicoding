@@ -1,0 +1,92 @@
+<div class="panel">
+  <div class="health" :class="health.status">
+    <span class="dot"></span>
+    <b>{{ health.label }}</b>
+    <span class="hint">{{ health.hint }}</span>
+    <button class="recheck" @click="checkHealth">重新检查</button>
+  </div>
+
+  <h2>错误处理三态</h2>
+  <p class="lead">三个按钮 = 三种错误形态。点完后看下方"err 解剖图"，对照「第一节、三种形态」表。</p>
+
+  <div class="actions">
+    <button class="warn"   @click="trigger404" :disabled="loading">① 404 找不到用户</button>
+    <button class="danger" @click="trigger500" :disabled="loading">② 500 后端崩了</button>
+    <button class="gray"   @click="triggerNetErr" :disabled="loading">③ 网络断了（端口切到 39999）</button>
+  </div>
+
+  <p v-if="loading" class="status">请求中...</p>
+
+  <!-- 三态 UI 展示 -->
+  <div class="three-state">
+    <div class="state-block">
+      <span class="label loading-label" :class="{ active: loading }">loading</span>
+      <span class="val">{{ loading }}</span>
+    </div>
+    <div class="state-block">
+      <span class="label error-label" :class="{ active: !!errorMsg }">error</span>
+      <span class="val">{{ errorMsg || '(null)' }}</span>
+    </div>
+    <div class="state-block">
+      <span class="label data-label" :class="{ active: !!users.length }">data</span>
+      <span class="val">{{ users.length ? `${users.length} 个用户` : '(空)' }}</span>
+    </div>
+  </div>
+
+  <!-- err 解剖图 -->
+  <div v-if="errSnapshot" class="card" :class="errSnapshot.shape">
+    <h3>🔬 err 解剖图 —— 形态 {{ errSnapshot.shapeLabel }}</h3>
+    <table>
+      <tr>
+        <th><code>err.response</code></th>
+        <td>
+          <span v-if="!errSnapshot.response" class="muted">undefined</span>
+          <pre v-else>{{ errSnapshot.response }}</pre>
+        </td>
+      </tr>
+      <tr>
+        <th><code>err.request</code></th>
+        <td>
+          <span v-if="!errSnapshot.hasRequest" class="muted">undefined</span>
+          <span v-else class="ok-mark">✓ 有（底层 XMLHttpRequest）</span>
+        </td>
+      </tr>
+      <tr>
+        <th><code>err.message</code></th>
+        <td>{{ errSnapshot.message }}</td>
+      </tr>
+      <tr>
+        <th><code>err.code</code></th>
+        <td>{{ errSnapshot.code || '(无)' }}</td>
+      </tr>
+      <tr>
+        <th><code>err.config.url</code></th>
+        <td class="wrap">{{ errSnapshot.url }}</td>
+      </tr>
+    </table>
+    <p class="diagnosis">
+      <b>诊断：</b>{{ errSnapshot.diagnosis }}
+    </p>
+  </div>
+
+  <details class="raw" v-if="errSnapshot">
+    <summary>📋 完整的 try/catch 代码（背下来）</summary>
+    <pre>try {
+  await axios.get(url)
+} catch (err) {
+  if (err.response) {
+    // 形态 ①：后端给了非 2xx 响应
+    error.value = err.response.data?.message
+               || `HTTP ${err.response.status}`
+  } else if (err.request) {
+    // 形态 ②：请求发出去但没收到响应
+    error.value = '网络错误：后端没启动或被防火墙拦了'
+  } else {
+    // 形态 ③：配置错误
+    error.value = `请求配置错误：${err.message}`
+  }
+} finally {
+  loading.value = false
+}</pre>
+  </details>
+</div>

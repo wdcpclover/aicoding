@@ -1,0 +1,17 @@
+<h2>🎯 动态路由匹配</h2>
+
+<nav class="nav">
+  <RouterLink to="/">用户列表</RouterLink>
+  <RouterLink to="/users/1">用户 1</RouterLink>
+  <RouterLink to="/users/2">用户 2</RouterLink>
+  <RouterLink to="/users/3">用户 3</RouterLink>
+  <RouterLink to="/ghost-page" class="broken">去个不存在的页面</RouterLink>
+</nav>
+
+<div class="page">
+  <RouterView />
+</div>
+
+<p style="color: #888; font-size: 12px; margin-top: 12px;">
+  💡 点击不同的"用户 N"观察 <code>route.params.id</code> 变化；点最右边的链接会落到 404 兜底路由。
+</p>

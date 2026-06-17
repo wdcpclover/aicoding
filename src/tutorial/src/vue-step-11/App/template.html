@@ -1,0 +1,77 @@
+<h2>一、基础侦听</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <input v-model="question" placeholder="输入一个包含 ? 的问题" style="width: 100%;" />
+  <p style="margin: 8px 0;"><strong>回答：</strong>{{ answer }}</p>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 侦听 question，检测到 ? 号后模拟"思考"，1 秒后给出回答
+  </p>
+</div>
+
+<h2>二、新值与旧值</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="count++">计数: {{ count }}</button>
+  <button @click="count = 0" style="margin-left: 8px;">重置</button>
+  <div v-if="countLog.length" style="background: #e3f2fd; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 12px; font-family: monospace; max-height: 100px; overflow-y: auto;">
+    <div v-for="(log, i) in countLog" :key="i">{{ log }}</div>
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 回调接收 (newVal, oldVal)，每次点击都能看到 旧值 → 新值
+  </p>
+</div>
+
+<h2>三、深层侦听 (deep)</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">姓名</label>
+      <input v-model="user.name" style="width: 100%;" />
+    </div>
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">年龄</label>
+      <input v-model.number="user.age" type="number" style="width: 100%;" />
+    </div>
+  </div>
+  <p style="margin: 4px 0;"><strong>当前：</strong>{{ user.name }}，{{ user.age }} 岁</p>
+  <div v-if="userLog.length" style="background: #e8f5e9; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 12px; font-family: monospace; max-height: 100px; overflow-y: auto;">
+    <div v-for="(log, i) in userLog" :key="i">{{ log }}</div>
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 加了 deep: true 才能检测到嵌套属性 (name/age) 的变化
+  </p>
+</div>
+
+<h2>四、即时执行 (immediate)</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+    <button @click="todoId = Math.max(1, todoId - 1)">◀</button>
+    <span><strong>Todo #{{ todoId }}</strong></span>
+    <button @click="todoId++">▶</button>
+  </div>
+  <div v-if="!todoData" style="color: #888;">加载中...</div>
+  <div v-else style="background: #fff3e0; padding: 8px; border-radius: 4px; font-size: 13px;">
+    <p style="margin: 2px 0;">📝 <strong>{{ todoData.title }}</strong></p>
+    <p style="margin: 2px 0;">状态：{{ todoData.completed ? '✅ 已完成' : '⏳ 未完成' }}</p>
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 immediate: true → 页面加载时立即获取数据，不用等你操作
+  </p>
+</div>
+
+<h2>五、停止侦听</h2>
+<div style="background: #f8f0ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+    <button @click="stopCount++">计数: {{ stopCount }}</button>
+    <button @click="stopWatcher()" :disabled="watcherStopped" :style="{ color: watcherStopped ? '#999' : '#c62828' }">
+      {{ watcherStopped ? '侦听已停止' : '停止侦听' }}
+    </button>
+  </div>
+  <div v-if="stopLog.length" style="background: #ede7f6; padding: 8px; border-radius: 4px; font-size: 12px; font-family: monospace; max-height: 80px; overflow-y: auto;">
+    <div v-for="(log, i) in stopLog" :key="i">{{ log }}</div>
+  </div>
+  <p v-if="watcherStopped" style="color: #c62828; font-size: 13px; margin: 8px 0 0;">
+    ⛔ 侦听器已停止，再点计数不会产生新日志
+  </p>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 watch() 返回停止函数；选项式用 this.$watch() 返回停止函数
+  </p>
+</div>

@@ -1,0 +1,21 @@
+<div class="cart">
+  <div class="head">
+    <h2>🛒 购物车（组件 B）</h2>
+    <button v-if="items.length" class="ghost" @click="clear">清空</button>
+  </div>
+
+  <p v-if="!items.length" class="empty">购物车是空的，去上面加几本</p>
+
+  <ul v-else class="cart-list">
+    <li v-for="i in items" :key="i.id">
+      <span>{{ i.name }}</span>
+      <span class="qty">×{{ i.qty }}</span>
+      <span class="price">¥{{ i.price * i.qty }}</span>
+      <button class="del" @click="remove(i.id)">移除</button>
+    </li>
+  </ul>
+
+  <p v-if="items.length" class="sum">
+    共 <b>{{ count }}</b> 件，合计 <b class="total">¥{{ total }}</b>
+  </p>
+</div>

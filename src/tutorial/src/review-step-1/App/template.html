@@ -1,0 +1,30 @@
+<div class="page">
+  <!-- 文本插值 + 属性绑定 -->
+  <h2>{{ title }}</h2>
+
+  <!-- v-model：表单双向绑定；@keyup.enter / @click：事件 -->
+  <form class="add" @submit.prevent="add">
+    <input v-model="input" placeholder="输入待办，回车添加">
+    <button type="submit">添加</button>
+  </form>
+
+  <!-- computed 派生数据 -->
+  <p class="bar">
+    剩余 <b>{{ remaining }}</b> 项
+    <span v-if="allDone" class="ok">　🎉 全部完成！</span>
+  </p>
+
+  <!-- v-for 渲染列表，每项是一个子组件；:todo 传 props，@toggle/@remove 收 emit -->
+  <ul class="list">
+    <TodoItem
+      v-for="t in todos"
+      :key="t.id"
+      :todo="t"
+      @toggle="toggle"
+      @remove="remove"
+    />
+  </ul>
+
+  <p v-if="!todos.length" class="empty">列表空了，加一条试试</p>
+  <p class="muted">本次新增了 {{ stats.created }} 条（reactive 对象）</p>
+</div>

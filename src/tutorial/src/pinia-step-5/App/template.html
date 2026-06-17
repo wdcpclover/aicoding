@@ -1,0 +1,37 @@
+<div style="font-family: 'Microsoft YaHei', sans-serif; padding: 24px; line-height: 1.8;">
+  <h1>Action：同步 + 异步</h1>
+
+  <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0;">
+    count = <strong style="color: #42b983; font-size: 22px;">{{ count }}</strong>
+  </div>
+
+  <h3>同步 action</h3>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <button @click="increment()" style="padding: 8px 16px; cursor: pointer;">+1</button>
+    <button @click="incrementBy5()" style="padding: 8px 16px; cursor: pointer;">+5</button>
+    <button @click="randomize()" style="padding: 8px 16px; cursor: pointer;">随机数</button>
+  </div>
+
+  <h3 style="margin-top: 24px;">异步 action（演示加载态 + 错误处理）</h3>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <button @click="loadAdvice()" :disabled="loading" style="padding: 8px 16px; cursor: pointer;">
+      {{ loading ? '加载中…' : '拉一句英文建议' }}
+    </button>
+    <button @click="failOnPurpose()" :disabled="loading" style="padding: 8px 16px; cursor: pointer; background: #f08d49; color: white; border: none; border-radius: 4px;">
+      模拟失败
+    </button>
+  </div>
+
+  <p v-if="advice" style="background: #e8f5e9; padding: 12px; border-radius: 6px; margin-top: 12px;">
+    💡 {{ advice }}
+  </p>
+  <p v-if="error" style="background: #ffebee; padding: 12px; border-radius: 6px; margin-top: 12px; color: #c62828;">
+    ❌ {{ error }}
+  </p>
+
+  <h3 style="margin-top: 24px;">$onAction 日志（最近 8 条）</h3>
+  <div style="background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 13px; min-height: 80px; max-height: 220px; overflow-y: auto;">
+    <div v-for="(line, i) in log.slice(0, 8)" :key="i">{{ line }}</div>
+    <div v-if="log.length === 0" style="color: #666;">（还没调用任何 action）</div>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM 操作</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; }
+        button { padding: 8px 16px; margin: 5px; cursor: pointer; border: none; background: #42b983; color: white; border-radius: 5px; }
+        button:hover { background: #35495e; }
+        .box { width: 150px; height: 150px; background: #42b983; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: white; border-radius: 8px; transition: all 0.3s; }
+        .highlight { background-color: yellow; padding: 2px 4px; }
+        #todo-list li { padding: 5px 0; }
+        .done { text-decoration: line-through; color: #999; }
+        .demo-area { border: 2px dashed #ccc; padding: 20px; margin: 10px 0; border-radius: 8px; min-height: 50px; }
+    </style>
+</head>
+<body>
+    <h1>DOM 操作：用 JS 控制页面</h1>
+
+    <!-- 修改内容 -->
+    <h2>1. 修改文字内容</h2>
+    <p id="text-demo">我是原始文字。</p>
+    <button onclick="document.getElementById('text-demo').textContent = '我被修改了！'">修改文字</button>
+    <button onclick="document.getElementById('text-demo').innerHTML = '我变成了<strong>加粗</strong>的！'">修改 HTML</button>
+
+    <!-- 修改样式 -->
+    <h2>2. 修改样式</h2>
+    <div id="style-box" class="box">盒子</div>
+    <button onclick="document.getElementById('style-box').style.backgroundColor = '#f44336'">变红</button>
+    <button onclick="document.getElementById('style-box').style.backgroundColor = '#2196f3'">变蓝</button>
+    <button onclick="document.getElementById('style-box').style.borderRadius = '50%'">变圆</button>
+    <button onclick="document.getElementById('style-box').style.transform = 'rotate(45deg)'">旋转</button>
+
+    <!-- 添加/删除 class -->
+    <h2>3. 操作 class</h2>
+    <p id="class-demo">这段文字可以添加高亮效果。</p>
+    <button onclick="document.getElementById('class-demo').classList.add('highlight')">加高亮</button>
+    <button onclick="document.getElementById('class-demo').classList.remove('highlight')">去高亮</button>
+    <button onclick="document.getElementById('class-demo').classList.toggle('highlight')">切换高亮</button>
+
+    <!-- 创建和删除元素 -->
+    <h2>4. 动态创建元素</h2>
+    <div id="dynamic-area" class="demo-area">动态内容区域</div>
+    <button onclick="addElement()">添加一个段落</button>
+    <button onclick="clearArea()">清空</button>
+
+    <!-- 事件监听 -->
+    <h2>5. 事件监听</h2>
+    <div id="event-box" class="box" style="cursor: pointer;">
+        点我 / 移入移出
+    </div>
+    <p id="event-log">事件日志：</p>
+
+    <!-- 简易待办 -->
+    <h2>6. 综合练习：简易待办</h2>
+    <input type="text" id="todo-input" placeholder="输入待办事项...">
+    <button onclick="addTodo()">添加</button>
+    <ul id="todo-list"></ul>
+
+    <script>
+        // 4. 动态创建元素
+        let count = 0;
+        function addElement() {
+            count++;
+            const p = document.createElement('p');
+            p.textContent = `这是第 ${count} 个动态创建的段落`;
+            document.getElementById('dynamic-area').appendChild(p);
+        }
+        function clearArea() {
+            document.getElementById('dynamic-area').innerHTML = '动态内容区域';
+            count = 0;
+        }
+
+        // 5. 事件监听
+        const eventBox = document.getElementById('event-box');
+        const eventLog = document.getElementById('event-log');
+
+        eventBox.addEventListener('click', () => {
+            eventLog.textContent = '事件日志：你点击了盒子！';
+        });
+        eventBox.addEventListener('mouseenter', () => {
+            eventBox.style.backgroundColor = '#f44336';
+            eventBox.textContent = '鼠标进来了';
+        });
+        eventBox.addEventListener('mouseleave', () => {
+            eventBox.style.backgroundColor = '#42b983';
+            eventBox.textContent = '点我 / 移入移出';
+        });
+
+        // 6. 简易待办
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const li = document.createElement('li');
+            li.textContent = text;
+            li.style.cursor = 'pointer';
+            li.addEventListener('click', () => {
+                li.classList.toggle('done');
+            });
+            document.getElementById('todo-list').appendChild(li);
+            input.value = '';
+        }
+
+        // 回车也能添加
+        document.getElementById('todo-input').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') addTodo();
+        });
+    </script>
+</body>
+</html>

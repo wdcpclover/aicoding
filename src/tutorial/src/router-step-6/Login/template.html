@@ -1,0 +1,15 @@
+<div>
+  <h3>🔐 登录</h3>
+  <p style="font-size: 13px; color: #888;">
+    输入任意用户名点「登录」即可（demo，未做密码校验）
+  </p>
+
+  <div class="form-row">
+    <input v-model="username" placeholder="用户名" @keyup.enter="doLogin" />
+    <button class="btn" @click="doLogin">登录</button>
+  </div>
+
+  <p v-if="$route.query.redirect" style="font-size: 12px; color: #c41d7f;">
+    登录后将跳转到：<code>{{ $route.query.redirect }}</code>
+  </p>
+</div>

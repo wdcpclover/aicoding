@@ -1,0 +1,40 @@
+<h2>一、基础事件触发</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="border: 2px dashed #42b883; padding: 12px; border-radius: 8px; margin-bottom: 8px;">
+    <ChildComp v-model="text" @response="(msg) => childMsg = msg" @increment="(n) => count += n" @submit="handleSubmit" />
+  </div>
+  <p>📨 父组件收到消息：<strong>{{ childMsg }}</strong></p>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 子组件创建时自动 emit('response', ...) → 父组件通过 @response 接收
+  </p>
+</div>
+
+<h2>二、交互触发事件</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p>父组件计数：<strong style="font-size: 20px; color: #1976d2;">{{ count }}</strong></p>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 点击上方子组件中的 +1 / +5 按钮，子组件 emit → 父组件更新计数
+  </p>
+</div>
+
+<h2>三、传递多个参数</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div v-if="submitResult" style="background: #e8f5e9; padding: 10px; border-radius: 6px;">
+    <p style="margin: 4px 0;">📋 父组件收到提交结果：</p>
+    <p style="margin: 4px 0;">姓名：<strong>{{ submitResult.name }}</strong></p>
+    <p style="margin: 4px 0;">分数：<strong>{{ submitResult.score }}</strong></p>
+    <p style="margin: 4px 0;">等级：<strong>{{ submitResult.level }}</strong></p>
+  </div>
+  <p v-else style="color: #888;">等待子组件提交数据...</p>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 填写上方子组件中的表单并提交，emit 可传递多个参数
+  </p>
+</div>
+
+<h2>四、v-model 双向绑定</h2>
+<div style="background: #fce4ec; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p>父组件中的 text：<strong>{{ text }}</strong></p>
+  <p style="color: #888; font-size: 12px; margin: 4px 0 0;">
+    💡 在子组件输入框中修改内容，父组件数据实时同步。v-model 就是 :modelValue + @update:modelValue 的简写
+  </p>
+</div>

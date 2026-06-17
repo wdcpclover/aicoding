@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>函数：普通 / 箭头 / 默认 / 剩余</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>函数：普通 / 箭头 / 默认 / 剩余</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+
+        // ====== 普通函数 ======
+        r.push('=== 普通函数 ===')
+        function greet(name) {
+            return `你好，${name}！`
+        }
+        r.push(greet('小明'))
+        r.push(greet('小红'))
+
+        // ====== 箭头函数 ======
+        r.push('\n=== 箭头函数（ES6） ===')
+        const add = (a, b) => {
+            return a + b
+        }
+        r.push('add(3, 5) = ' + add(3, 5))
+
+        const multiply = (a, b) => a * b   // 简写
+        r.push('multiply(3, 5) = ' + multiply(3, 5))
+
+        const double = n => n * 2          // 单参数省括号
+        r.push('double(7) = ' + double(7))
+
+        // ====== 默认参数 ======
+        r.push('\n=== 默认参数 ===')
+        const sayHello = (name = '同学') => `Hello, ${name}!`
+        r.push(sayHello('小刚'))
+        r.push(sayHello())   // 没传，用默认值
+
+        // ====== 剩余参数 ======
+        r.push('\n=== 剩余参数 ...nums ===')
+        const sum = (...nums) => nums.reduce((total, n) => total + n, 0)
+        r.push('sum(1, 2)            = ' + sum(1, 2))
+        r.push('sum(1, 2, 3, 4, 5)   = ' + sum(1, 2, 3, 4, 5))
+        r.push('sum() // 没传        = ' + sum())
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

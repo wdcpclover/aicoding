@@ -1,0 +1,127 @@
+.panel {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 16px;
+  max-width: 920px;
+}
+.panel h2 { margin: 8px 0 4px; font-size: 17px; }
+.panel h2 .muted { color: #888; font-weight: 400; font-size: 14px; }
+.panel .lead { margin: 0 0 12px; color: #666; font-size: 13px; }
+.panel code { font-size: 12px; background: #eef1f5; padding: 1px 5px; border-radius: 3px; color: #c44323; }
+.panel .kbd {
+  font-family: monospace;
+  font-size: 10px;
+  background: #1e293b;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* —— 健康检查条 —— */
+.health {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 6px; font-size: 13px;
+  border: 1px solid; margin-bottom: 12px;
+}
+.health .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.health b { font-weight: 600; }
+.health .hint { color: inherit; opacity: 0.7; font-size: 12px; }
+.health .recheck {
+  margin-left: auto; font-size: 12px; padding: 2px 8px;
+  border-radius: 4px; border: 1px solid currentColor;
+  background: transparent; color: inherit; cursor: pointer;
+}
+.health.checking { background: #f5f7fa; border-color: #d1d5db; color: #6b7280; }
+.health.checking .dot { background: #9ca3af; }
+.health.ok       { background: #ecfdf5; border-color: #34d399; color: #047857; }
+.health.ok .dot  { background: #10b981; }
+.health.down     { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.health.down .dot{ background: #ef4444; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.actions button {
+  padding: 6px 12px; font-size: 12px;
+  border: 1px solid #42b883; background: #42b883;
+  color: white; border-radius: 4px; cursor: pointer;
+}
+.actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+.actions .warn   { background: #c46a18; border-color: #c46a18; }
+.actions .danger { background: #c4302b; border-color: #c4302b; }
+.actions .ghost  { background: transparent; color: #6b7280; border-color: #d1d5db; }
+
+/* —— 双栏 —— */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 760px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+.card {
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+.card h3 {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e3e8ee;
+  color: #1858b0;
+}
+
+.status { padding: 10px 12px; color: #888; font-size: 13px; margin: 0; }
+.error  { padding: 10px 12px; color: #c4302b; font-size: 13px; margin: 0; }
+.empty  { padding: 14px; color: #aaa; font-size: 12px; text-align: center; margin: 0; }
+
+.users {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.users th, .users td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+.users th { background: #fafbfc; color: #555; font-weight: 500; }
+
+/* —— 日志 —— */
+.log {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  padding: 8px 12px;
+  background: #1e293b;
+  color: #e2e8f0;
+  height: 240px;
+  overflow: auto;
+}
+.log .line { white-space: pre-wrap; word-break: break-all; }
+.log .line.req  { color: #93c5fd; }
+.log .line.res  { color: #6ee7b7; }
+.log .line.err  { color: #fca5a5; }
+.log .line.warn { color: #fcd34d; }
+.log .empty {
+  color: #64748b;
+  font-style: italic;
+  background: transparent;
+  padding: 8px 0;
+}
+
+.hint-line {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.7;
+  background: #fffbeb;
+  padding: 10px 14px;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 4px 4px 0;
+}

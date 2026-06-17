@@ -1,0 +1,144 @@
+.panel {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 16px;
+  max-width: 820px;
+}
+.panel h2 { margin: 8px 0 4px; font-size: 18px; }
+.panel .lead { margin: 0 0 12px; color: #666; font-size: 13px; }
+
+/* —— 健康检查条 —— */
+.health {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid;
+  margin-bottom: 12px;
+}
+.health .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.health b { font-weight: 600; }
+.health .hint { color: inherit; opacity: 0.7; font-size: 12px; }
+.health .recheck {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.health.checking { background: #f5f7fa; border-color: #d1d5db; color: #6b7280; }
+.health.checking .dot { background: #9ca3af; }
+.health.ok       { background: #ecfdf5; border-color: #34d399; color: #047857; }
+.health.ok .dot  { background: #10b981; }
+.health.down     { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.health.down .dot{ background: #ef4444; }
+
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.actions button {
+  padding: 6px 14px;
+  font-size: 13px;
+  border: 1px solid #42b883;
+  background: #42b883;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+.status { color: #888; font-size: 13px; }
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+@media (min-width: 760px) {
+  .two-col { grid-template-columns: 1fr 1fr; }
+}
+
+.card {
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+.card h3 {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e3e8ee;
+}
+.card.req h3 { background: #eef6ff; color: #1858b0; }
+.card.res h3 { background: #eefaf0; color: #1e7e34; }
+.card.res.error h3 { background: #fff1ed; color: #c44323; }
+
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.card th, .card td {
+  text-align: left;
+  vertical-align: top;
+  padding: 6px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.card th {
+  width: 150px;
+  font-weight: 500;
+  color: #555;
+  background: #fafbfc;
+}
+.card th code,
+.card td code {
+  background: transparent;
+  color: #c44323;
+  font-size: 11px;
+  padding: 0;
+}
+.card td.wrap { word-break: break-all; }
+.card pre {
+  margin: 0;
+  background: transparent;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.card pre.data {
+  max-height: 240px;
+  overflow: auto;
+}
+
+.card .ok    { color: #1e7e34; }
+.card .redir { color: #6b7280; }
+.card .warn  { color: #c46a18; }
+.card .err   { color: #c4302b; }
+
+.tip {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.8;
+  background: #fffbeb;
+  padding: 8px 12px;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 4px 4px 0;
+}
+.tip code {
+  background: #eef1f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 11px;
+}

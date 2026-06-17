@@ -1,0 +1,69 @@
+<div class="panel">
+  <!-- 健康检查条：实时显示后端是否在线 -->
+  <div class="health" :class="health.status">
+    <span class="dot"></span>
+    <b>{{ health.label }}</b>
+    <span class="hint">{{ health.hint }}</span>
+    <button class="recheck" @click="checkHealth">重新检查</button>
+  </div>
+
+  <h2>看清一次真实的 HTTP 对话</h2>
+  <p class="lead">点按钮 → 发一次请求到自家 Express 后端 → 把 axios 拿到的字段全部展开。</p>
+
+  <div class="actions">
+    <button @click="loadUsers" :disabled="loading || health.status !== 'ok'">
+      GET /api/users
+    </button>
+    <span v-if="loading" class="status">请求中...</span>
+  </div>
+
+  <div v-if="reqInfo || resInfo" class="two-col">
+    <section v-if="reqInfo" class="card req">
+      <h3>📤 Request（你发出去的）</h3>
+      <table>
+        <tr>
+          <th><code>res.config.method</code></th>
+          <td>{{ reqInfo.method }}</td>
+        </tr>
+        <tr>
+          <th><code>res.config.url</code></th>
+          <td class="wrap">{{ reqInfo.url }}</td>
+        </tr>
+        <tr>
+          <th><code>res.config.headers</code></th>
+          <td><pre>{{ reqInfo.headers }}</pre></td>
+        </tr>
+        <tr>
+          <th><code>res.config.data</code></th>
+          <td><pre>{{ reqInfo.body || '(GET 没有请求体)' }}</pre></td>
+        </tr>
+      </table>
+    </section>
+
+    <section v-if="resInfo" class="card res" :class="{ error: resInfo.errored }">
+      <h3>📥 Response（服务器回来的）</h3>
+      <table>
+        <tr>
+          <th><code>res.status</code></th>
+          <td>
+            <b :class="resInfo.statusClass">{{ resInfo.status }} {{ resInfo.statusText }}</b>
+          </td>
+        </tr>
+        <tr>
+          <th><code>res.headers</code></th>
+          <td><pre>{{ resInfo.headers }}</pre></td>
+        </tr>
+        <tr>
+          <th><code>res.data</code></th>
+          <td><pre class="data">{{ resInfo.data }}</pre></td>
+        </tr>
+      </table>
+    </section>
+  </div>
+
+  <p class="tip" v-if="resInfo && !resInfo.errored">
+    💡 看 <code>res.config.headers</code> 里的 <code>Accept</code> —— axios 自动帮你加的。<br>
+    💡 看 <code>res.data</code> —— 直接是 JS 数组，没有 <code>JSON.parse</code> 这一步，axios 已经做了。<br>
+    💡 看 <code>res.status</code> 是绿色的 <b>200</b> —— 这就是「2xx 成功」。
+  </p>
+</div>

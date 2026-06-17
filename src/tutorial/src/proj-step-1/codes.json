@@ -1,0 +1,37 @@
+[
+  {
+    "name": "server/package.json",
+    "lang": "json",
+    "code": "{\n  \"name\": \"chatbox-server\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"description\": \"教学用 Chatbox 后端：Express + SQLite + JWT + mock AI\",\n  \"main\": \"server.js\",\n  \"type\": \"commonjs\",\n  \"scripts\": {\n    \"start\": \"node server.js\",\n    \"dev\": \"node --watch server.js\"\n  },\n  \"dependencies\": {\n    \"bcryptjs\": \"^2.4.3\",\n    \"better-sqlite3\": \"^11.3.0\",\n    \"cors\": \"^2.8.5\",\n    \"express\": \"^4.19.2\",\n    \"express-rate-limit\": \"^7.4.0\",\n    \"helmet\": \"^8.0.0\",\n    \"jsonwebtoken\": \"^9.0.2\"\n  }\n}\n"
+  },
+  {
+    "name": "server/server.js",
+    "lang": "js",
+    "code": "// =============================================================\n//  chatbox/server/server.js\n//  教学用 Chatbox 后端 —— Express + SQLite + JWT + LLM 转发\n//  端口：3002\n// =============================================================\n\nconst path = require('path')\nconst fs = require('fs')\nconst express = require('express')\nconst cors = require('cors')\nconst helmet = require('helmet')\n\nrequire('./db')\nconst { PORT } = require('./config')\n\nconst { globalLimiter, authLimiter, messageLimiter } = require('./middleware/rateLimit')\n\nconst authRoutes          = require('./routes/auth')\nconst settingsRoutes      = require('./routes/settings')\nconst conversationsRoutes = require('./routes/conversations')\nconst messagesRoutes      = require('./routes/messages')\n\nconst app = express()\n\n// 信任反向代理（部署到 nginx / vercel 后才能拿到真实 client IP）\napp.set('trust proxy', 1)\n\n// —— 安全头 + CORS + JSON 解析 + 日志 ——\napp.use(helmet({\n  contentSecurityPolicy: false      // 教学版禁用 CSP，否则 vite 静态资源会被拦\n}))\napp.use(cors())\napp.use(express.json({ limit: '1mb' }))\napp.use(globalLimiter)\napp.use((req, _res, next) => {\n  const ts = new Date().toLocaleTimeString('zh-CN', { hour12: false })\n  console.log(`[${ts}] ${req.method} ${req.url}`)\n  next()\n})\n\n// —— 健康检查 ——\napp.get('/api/health', (_req, res) => {\n  res.json({ status: 'ok', time: new Date().toISOString() })\n})\n\n// —— 业务路由 ——\napp.use('/api/auth',                            authLimiter, authRoutes)\napp.use('/api/settings',                        settingsRoutes)\napp.use('/api/conversations',                   conversationsRoutes)\napp.use('/api/conversations/:id/messages',      messageLimiter, messagesRoutes)\n\n// —— 生产环境：托管前端 vite build 出来的静态文件 ——\n//   开发时用 vite dev server（:5173）；\n//   生产时 `cd web && npm run build` 后把 dist/ 整目录交给这里 serve\nconst WEB_DIST = path.resolve(__dirname, '../web/dist')\nif (fs.existsSync(WEB_DIST)) {\n  app.use(express.static(WEB_DIST))\n  app.get(/^(?!\\/api\\/).*/, (_req, res) => {\n    res.sendFile(path.join(WEB_DIST, 'index.html'))\n  })\n}\n\n// —— 404（API）兜底 ——\napp.use((req, res) => {\n  res.status(404).json({ message: `路由不存在: ${req.method} ${req.url}` })\n})\n\n// —— 错误兜底 ——\napp.use((err, _req, res, _next) => {\n  console.error('🔥 unhandled:', err)\n  res.status(500).json({ message: err.message || '服务器内部错误' })\n})\n\napp.listen(PORT, () => {\n  console.log(`\\n🤖 Chatbox 后端已启动: http://localhost:${PORT}`)\n  console.log(`   健康检查:  http://localhost:${PORT}/api/health`)\n  if (fs.existsSync(WEB_DIST)) {\n    console.log(`   前端已托管: http://localhost:${PORT}/`)\n  } else {\n    console.log(`   前端开发:   cd web && npm run dev  (http://localhost:5173)`)\n  }\n  console.log()\n})\n"
+  },
+  {
+    "name": "web/package.json",
+    "lang": "json",
+    "code": "{\n  \"name\": \"chatbox-web\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  },\n  \"dependencies\": {\n    \"axios\": \"^1.7.7\",\n    \"marked\": \"^14.1.3\",\n    \"pinia\": \"^2.2.4\",\n    \"vue\": \"^3.5.12\",\n    \"vue-router\": \"^4.4.5\"\n  },\n  \"devDependencies\": {\n    \"@vitejs/plugin-vue\": \"^5.1.4\",\n    \"vite\": \"^5.4.10\"\n  }\n}\n"
+  },
+  {
+    "name": "web/vite.config.js",
+    "lang": "js",
+    "code": "import { defineConfig } from 'vite'\nimport vue from '@vitejs/plugin-vue'\nimport path from 'path'\n\nexport default defineConfig({\n  plugins: [vue()],\n  resolve: {\n    alias: {\n      '@': path.resolve(process.cwd(), 'src')\n    }\n  },\n  server: {\n    port: 5173,\n    open: false\n  }\n})\n"
+  },
+  {
+    "name": "web/index.html",
+    "lang": "html",
+    "code": "<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Chatbox · 教学版</title>\n</head>\n<body>\n  <div id=\"app\"></div>\n  <script type=\"module\" src=\"/src/main.js\"></script>\n</body>\n</html>\n"
+  },
+  {
+    "name": "web/src/main.js",
+    "lang": "js",
+    "code": "import { createApp } from 'vue'\nimport { createPinia } from 'pinia'\nimport App from './App.vue'\nimport router from './router'\nimport { useAuthStore } from './stores/auth'\nimport './assets/global.css'\n\nconst app = createApp(App)\napp.use(createPinia())\napp.use(router)\n\n// 启动前先从 localStorage 恢复登录态\nconst authStore = useAuthStore()\nauthStore.restore().finally(() => app.mount('#app'))\n"
+  },
+  {
+    "name": "web/src/App.vue",
+    "lang": "vue",
+    "code": "<script setup>\nimport { RouterView } from 'vue-router'\n</script>\n\n<template>\n  <RouterView />\n</template>\n"
+  }
+]

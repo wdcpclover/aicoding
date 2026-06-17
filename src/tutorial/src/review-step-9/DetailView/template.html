@@ -1,0 +1,22 @@
+<div class="view detail">
+  <button class="ghost" @click="back">‹ 返回列表</button>
+
+  <p v-if="loading" class="muted">加载中...</p>
+
+  <div v-else-if="current">
+    <h2>{{ current.title }}</h2>
+    <p class="row">📍 {{ current.location }}　🕒 {{ current.start_time }}</p>
+    <p class="row">主办方：{{ current.organizer }}　联系方式：{{ current.contact }}</p>
+    <p class="desc">{{ current.description }}</p>
+
+    <p v-if="current.is_registered" class="badge">✓ 已报名</p>
+    <button v-else @click="onRegister">立即报名</button>
+
+    <div class="my" v-if="myList.length">
+      <b>我报名的活动（{{ myList.length }}）</b>
+      <ul>
+        <li v-for="m in myList" :key="m.id">• {{ m.title }}（{{ m.start_time }}）</li>
+      </ul>
+    </div>
+  </div>
+</div>

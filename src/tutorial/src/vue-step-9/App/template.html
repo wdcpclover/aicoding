@@ -1,0 +1,166 @@
+<h2>一、手动绑定 vs v-model</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">手动绑定 (:value + @input)</label>
+      <input :value="text" @input="e => text = e.target.value" style="width: 100%;" />
+    </div>
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">v-model（语法糖）</label>
+      <input v-model="text" style="width: 100%;" />
+    </div>
+  </div>
+  <p style="margin: 4px 0;"><strong>值：</strong>"{{ text }}"</p>
+  <p style="color: #888; font-size: 12px; margin-top: 4px;">
+    💡 两个输入框绑定同一个变量，改一个另一个也变——它们完全等价
+  </p>
+</div>
+
+<h2>二、文本 &amp; 多行文本</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="margin-bottom: 12px;">
+    <label style="font-size: 12px; color: #666;">单行文本</label>
+    <input v-model="message" placeholder="编辑我" style="width: 100%;" />
+    <p style="margin: 4px 0;"><strong>message：</strong>"{{ message }}"</p>
+  </div>
+  <div>
+    <label style="font-size: 12px; color: #666;">多行文本 (textarea)</label>
+    <textarea v-model="multilineText" placeholder="输入多行文本，试试换行" rows="3" style="width: 100%;"></textarea>
+    <p style="white-space: pre-line; background: #e3f2fd; padding: 8px; border-radius: 4px; margin-top: 4px; font-size: 13px;">{{ multilineText || '（预览区）' }}</p>
+  </div>
+</div>
+
+<h2>三、复选框</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <h4 style="margin: 0 0 8px;">单个复选框 → 布尔值</h4>
+  <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+    <input type="checkbox" v-model="agreed" />
+    同意用户协议
+  </label>
+  <p style="margin: 4px 0;"><strong>agreed：</strong>{{ agreed }}</p>
+  <div v-if="agreed" style="background: #c8e6c9; padding: 6px 10px; border-radius: 4px; font-size: 13px; margin-top: 4px;">
+    ✅ 已同意，可以继续
+  </div>
+
+  <h4 style="margin: 16px 0 8px;">多个复选框 → 数组</h4>
+  <div style="display: flex; gap: 12px;">
+    <label v-for="fruit in allFruits" :key="fruit" style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+      <input type="checkbox" :value="fruit" v-model="checkedFruits" />
+      {{ fruit }}
+    </label>
+  </div>
+  <p style="margin: 8px 0;"><strong>checkedFruits：</strong>[{{ checkedFruits.join(', ') }}]</p>
+  <p style="color: #888; font-size: 12px;">
+    💡 多个 checkbox 绑定同一个数组，勾选/取消自动添加/移除 value
+  </p>
+</div>
+
+<h2>四、单选按钮</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; gap: 16px;">
+    <label v-for="s in sizes" :key="s" style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+      <input type="radio" :value="s" v-model="pickedSize" />
+      {{ s }}
+    </label>
+  </div>
+  <p style="margin: 8px 0;"><strong>pickedSize：</strong>"{{ pickedSize }}"</p>
+  <div style="display: inline-block; padding: 8px 16px; border-radius: 4px; margin-top: 4px;" :style="{ fontSize: pickedSize === '小' ? '12px' : pickedSize === '中' ? '16px' : '24px', background: '#fff3e0' }">
+    示例文字 — 字号随选择变化
+  </div>
+</div>
+
+<h2>五、选择器</h2>
+<div style="background: #f8f0ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; gap: 24px;">
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">静态选项</label>
+      <select v-model="selected" style="width: 100%;">
+        <option disabled value="">请选择</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <p style="margin: 4px 0; font-size: 13px;"><strong>selected：</strong>"{{ selected }}"</p>
+    </div>
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">v-for 动态选项</label>
+      <select v-model="dynamicSelected" style="width: 100%;">
+        <option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
+          {{ opt.text }}
+        </option>
+      </select>
+      <p style="margin: 4px 0; font-size: 13px;"><strong>dynamicSelected：</strong>"{{ dynamicSelected }}"</p>
+    </div>
+  </div>
+</div>
+
+<h2>六、值绑定</h2>
+<div style="background: #f1f8e9; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <h4 style="margin: 0 0 8px;">自定义 true-value / false-value</h4>
+  <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+    <input type="checkbox" v-model="toggle" true-value="yes" false-value="no" />
+    订阅通知
+  </label>
+  <p style="margin: 8px 0;"><strong>toggle：</strong>"{{ toggle }}"
+    <span :style="{ color: toggle === 'yes' ? '#2e7d32' : '#c62828' }">
+      （{{ toggle === 'yes' ? '已订阅' : '未订阅' }}）
+    </span>
+  </p>
+  <p style="color: #888; font-size: 12px;">
+    💡 不是 true/false，而是 "yes"/"no"——通过 true-value/false-value 自定义
+  </p>
+
+  <h4 style="margin: 16px 0 8px;">select 绑定对象值</h4>
+  <select v-model="selectedPerson" style="width: 100%;">
+    <option disabled :value="null">请选择</option>
+    <option v-for="p in people" :key="p.id" :value="p">{{ p.name }}</option>
+  </select>
+  <p v-if="selectedPerson" style="margin: 8px 0; font-size: 13px;">
+    <strong>selectedPerson：</strong>{{ JSON.stringify(selectedPerson) }}
+  </p>
+  <p style="color: #888; font-size: 12px;">
+    💡 :value 绑定对象后，选中的值就是整个对象，而不只是字符串
+  </p>
+</div>
+
+<h2>七、修饰符</h2>
+<div style="background: #fce4ec; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <h4 style="margin: 0 0 8px;">.lazy — 失焦后才同步</h4>
+  <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">无 .lazy（实时更新）</label>
+      <input v-model="noLazyMsg" placeholder="边输入边更新" style="width: 100%;" />
+      <p style="font-size: 12px; margin: 2px 0;">"{{ noLazyMsg }}"</p>
+    </div>
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">有 .lazy（失焦更新）</label>
+      <input v-model.lazy="lazyMsg" placeholder="输入后点外部" style="width: 100%;" />
+      <p style="font-size: 12px; margin: 2px 0;">"{{ lazyMsg }}"</p>
+    </div>
+  </div>
+
+  <h4 style="margin: 0 0 8px;">.number — 自动转数字</h4>
+  <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">无 .number（字符串）</label>
+      <input v-model="ageStr" type="text" placeholder="输入数字" style="width: 100%;" />
+      <p style="font-size: 12px; margin: 2px 0;">{{ ageStr }} + 1 = {{ ageStr + 1 }}
+        <span style="color: #c62828;">({{ typeof ageStr }})</span>
+      </p>
+    </div>
+    <div style="flex: 1;">
+      <label style="font-size: 12px; color: #666;">有 .number（数字）</label>
+      <input v-model.number="ageNum" type="text" placeholder="输入数字" style="width: 100%;" />
+      <p style="font-size: 12px; margin: 2px 0;">{{ ageNum }} + 1 = {{ ageNum + 1 }}
+        <span style="color: #2e7d32;">({{ typeof ageNum }})</span>
+      </p>
+    </div>
+  </div>
+
+  <h4 style="margin: 0 0 8px;">.trim — 去除首尾空格</h4>
+  <input v-model.trim="trimMsg" placeholder="前后加空格试试" style="width: 100%;" />
+  <p style="font-size: 12px; margin: 2px 0;"><strong>值：</strong>"{{ trimMsg }}" (长度: {{ trimMsg.length }})</p>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 对比 .number：左边 "25" + 1 = "251"（字符串拼接），右边 25 + 1 = 26（数字相加）
+  </p>
+</div>

@@ -1,0 +1,114 @@
+<h2>一、内联事件处理器</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="count++">点了 {{ count }} 次</button>
+  <button @click="count = 0" style="margin-left: 8px;">重置</button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 @click="count++" 是最简单的内联处理器，一行表达式搞定
+  </p>
+</div>
+
+<h2>二、方法事件处理器</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="greet">Greet（方法名绑定，event 自动传入）</button>
+  <div v-if="greetInfo" style="background: #e3f2fd; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 13px;">
+    {{ greetInfo }}
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 只写方法名不加 ()，Vue 自动传入原生 event 对象
+  </p>
+</div>
+
+<h2>三、传递参数与 $event</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="say('你好 👋')">说你好</button>
+  <button @click="say('再见 👋')" style="margin-left: 8px;">说再见</button>
+  <button @click="sayWithEvent('带事件信息', $event)" style="margin-left: 8px;">传参 + $event</button>
+  <div v-if="sayInfo" style="background: #e8f5e9; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 13px;">
+    {{ sayInfo }}
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 @click="say('你好')" 加括号传自定义参数，$event 可同时拿到原生事件
+  </p>
+</div>
+
+<h2>四、事件修饰符</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+
+  <h4 style="margin: 0 0 8px;">.stop — 阻止冒泡</h4>
+  <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+    <div @click="onBubble('外层')" style="flex: 1; padding: 12px; background: #ffccbc; border-radius: 8px; cursor: pointer;">
+      外层 div
+      <div style="margin-top: 8px;">
+        <button @click="onBubble('内层-无stop')">无 .stop（会冒泡）</button>
+      </div>
+    </div>
+    <div @click="onBubble('外层')" style="flex: 1; padding: 12px; background: #c8e6c9; border-radius: 8px; cursor: pointer;">
+      外层 div
+      <div style="margin-top: 8px;">
+        <button @click.stop="onBubble('内层-有stop')">有 .stop（不冒泡）</button>
+      </div>
+    </div>
+  </div>
+  <div v-if="bubbleLog.length" style="background: #fff3e0; padding: 8px; border-radius: 4px; font-size: 12px; margin-bottom: 8px;">
+    <p v-for="(log, i) in bubbleLog" :key="i" style="margin: 2px 0;">{{ log }}</p>
+  </div>
+  <button @click="bubbleLog = []" style="font-size: 11px;">清除日志</button>
+
+  <h4 style="margin: 16px 0 8px;">.prevent — 阻止默认行为</h4>
+  <form @submit.prevent="onSubmit" style="display: flex; gap: 8px;">
+    <input v-model="formText" placeholder="输入后回车或点提交" style="flex: 1;" />
+    <button type="submit">提交</button>
+  </form>
+  <div v-if="submitInfo" style="background: #fff3e0; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 13px; color: #e65100;">
+    {{ submitInfo }}
+  </div>
+
+  <h4 style="margin: 16px 0 8px;">.once — 只触发一次</h4>
+  <button @click.once="onceMsg = '已触发！之后再点就无效了'">
+    点我（.once）
+  </button>
+  <span v-if="onceMsg" style="margin-left: 8px; color: #2e7d32; font-size: 13px;">{{ onceMsg }}</span>
+
+  <h4 style="margin: 16px 0 8px;">.self — 仅自身触发</h4>
+  <div @click.self="selfMsg = '点击了 div 自身（不是子元素）'" style="padding: 12px; background: #e1bee7; border-radius: 8px; cursor: pointer;">
+    点击 div 自身（紫色区域，不含按钮）触发
+    <button @click="selfMsg = '点击了按钮（子元素），.self 不触发'" style="margin-left: 8px;">按钮（子元素）</button>
+  </div>
+  <div v-if="selfMsg" style="background: #f3e5f5; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 13px;">
+    {{ selfMsg }}
+  </div>
+</div>
+
+<h2>五、按键修饰符</h2>
+<div style="background: #f8f0ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <input @keyup.enter="keyMsg = '✅ Enter 键触发！'" placeholder="按 Enter 触发" />
+    <input @keyup.esc="keyMsg = '✅ Esc 键触发！'" placeholder="按 Esc 触发" />
+    <input @keyup.space="keyMsg = '✅ Space 空格触发！'" placeholder="按 Space 触发" />
+    <input @keyup.ctrl.enter="keyMsg = '✅ Ctrl + Enter 组合触发！'" placeholder="按 Ctrl + Enter 触发" />
+  </div>
+  <div v-if="keyMsg" style="background: #ede7f6; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 13px; color: #4527a0;">
+    {{ keyMsg }}
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 系统修饰键（ctrl/alt/shift）需要在松开另一个键时才触发 keyup
+  </p>
+</div>
+
+<h2>六、鼠标按键修饰符</h2>
+<div style="background: #f1f8e9; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div
+    @click.left="mouseMsg = '🖱️ 左键（主键）点击'"
+    @click.right.prevent="mouseMsg = '🖱️ 右键（次键）点击（已阻止菜单）'"
+    @click.middle="mouseMsg = '🖱️ 中键（滚轮键）点击'"
+    style="padding: 20px; background: #dcedc8; border-radius: 8px; text-align: center; user-select: none; cursor: pointer; font-size: 15px;"
+  >
+    👆 用不同鼠标按键点我
+  </div>
+  <div v-if="mouseMsg" style="background: #f1f8e9; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 13px; color: #33691e;">
+    {{ mouseMsg }}
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 右键加了 .prevent 阻止浏览器默认的右键菜单
+  </p>
+</div>

@@ -1,0 +1,17 @@
+<div>
+  <h3>🏠 首页</h3>
+  <p>点击按钮跳转到用户详情，或手动输入 ID 跳转：</p>
+
+  <div>
+    <button class="btn" @click="goToUser(1)">去用户 1</button>
+    <button class="btn" @click="goToUser(2)">去用户 2</button>
+    <button class="btn btn-outline" @click="goToUser(3, true)">
+      去用户 3（replace，不留历史）
+    </button>
+  </div>
+
+  <div class="form-row">
+    <input v-model="inputId" placeholder="输入用户 ID" />
+    <button class="btn" @click="goToUser(inputId)">跳转</button>
+  </div>
+</div>

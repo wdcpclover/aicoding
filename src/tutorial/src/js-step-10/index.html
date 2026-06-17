@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>循环</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>循环</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+        const fruits = ['苹果', '香蕉', '橘子', '葡萄', '芒果']
+
+        // ====== for ======
+        r.push('=== 传统 for 循环 ===')
+        for (let i = 0; i < fruits.length; i++) {
+            r.push(`第 ${i} 个: ${fruits[i]}`)
+        }
+
+        // ====== break / continue ======
+        r.push('\n=== break / continue ===')
+        const nums = []
+        for (let i = 0; i < 10; i++) {
+            if (i === 3) continue
+            if (i === 7) break
+            nums.push(i)
+        }
+        r.push('跳过 3、遇到 7 中断 → ' + nums.join(', '))
+
+        // ====== while ======
+        r.push('\n=== while ===')
+        let count = 0
+        while (count < 3) {
+            r.push('count = ' + count)
+            count++
+        }
+
+        // ====== for...of ======
+        r.push('\n=== for...of（推荐遍历数组） ===')
+        for (const fruit of fruits) {
+            r.push('水果: ' + fruit)
+        }
+
+        // ====== forEach（带索引） ======
+        r.push('\n=== forEach（需要 index 时）===')
+        fruits.forEach((fruit, i) => {
+            r.push(`[${i}] ${fruit}`)
+        })
+
+        // ====== for...in ======
+        r.push('\n=== for...in（遍历对象的键）===')
+        const student = { name: '小明', age: 20, major: '计算机' }
+        for (const key in student) {
+            r.push(`${key}: ${student[key]}`)
+        }
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

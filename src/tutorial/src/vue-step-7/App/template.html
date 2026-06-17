@@ -1,0 +1,102 @@
+<h2>一、v-for 遍历数组 — Todo List</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <form @submit.prevent="addTodo" style="display: flex; gap: 8px; margin-bottom: 8px;">
+    <input v-model="newTodo" required placeholder="输入新待办事项" style="flex: 1;" />
+    <button>添加</button>
+  </form>
+  <ul style="padding-left: 20px; margin: 0;">
+    <li v-for="(todo, index) in todos" :key="todo.id" style="margin: 4px 0;">
+      <span :style="{ textDecoration: todo.done ? 'line-through' : 'none', color: todo.done ? '#999' : '#333' }">
+        {{ index }}. {{ todo.text }}
+      </span>
+      <button @click="todo.done = !todo.done" style="margin-left: 8px; font-size: 11px;">
+        {{ todo.done ? '撤销' : '完成' }}
+      </button>
+      <button @click="removeTodo(todo)" style="margin-left: 4px; font-size: 11px;">删除</button>
+    </li>
+  </ul>
+  <p v-if="todos.length === 0" style="color: #999;">列表为空，添加一些待办吧！</p>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 注意 v-for 同时拿到了 (todo, index) 两个参数，:key 用的是 todo.id
+  </p>
+</div>
+
+<h2>二、v-for 遍历对象</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <ul style="padding-left: 20px; margin: 0;">
+    <li v-for="(value, key, index) in userProfile" :key="key">
+      <strong>{{ index }}.</strong> {{ key }}: {{ value }}
+    </li>
+  </ul>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 遍历对象可拿到三个参数：(value, key, index)
+  </p>
+</div>
+
+<h2>三、key 的重要性</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p style="color: #e65100; font-size: 13px; margin-bottom: 8px;">
+    ⚠️ 先在下方输入框里<strong>各输入不同的内容</strong>，然后点击"在开头插入"观察差异
+  </p>
+  <button @click="insertAtStart" style="margin-bottom: 12px;">在开头插入一项</button>
+  <div style="display: flex; gap: 16px;">
+    <div style="flex: 1;">
+      <h4 style="margin: 0 0 8px; color: #c62828;">❌ key=index</h4>
+      <div v-for="(item, index) in keyDemoItems" :key="index" style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+        <span style="min-width: 20px;">{{ item.label }}</span>
+        <input :placeholder="'输入 ' + item.label" style="flex: 1;" />
+      </div>
+    </div>
+    <div style="flex: 1;">
+      <h4 style="margin: 0 0 8px; color: #2e7d32;">✅ key=id</h4>
+      <div v-for="item in keyDemoItems" :key="item.id" style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+        <span style="min-width: 20px;">{{ item.label }}</span>
+        <input :placeholder="'输入 ' + item.label" style="flex: 1;" />
+      </div>
+    </div>
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 左边输入内容会"串位"（index 变了，DOM 复用出错），右边正确跟随（id 不变）
+  </p>
+</div>
+
+<h2>四、数组变更方法</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>数组：</strong>[{{ fruits.join(', ') }}]</p>
+  <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;">
+    <button @click="fruits.push('🍇 葡萄')">push(葡萄)</button>
+    <button @click="fruits.pop()">pop()</button>
+    <button @click="fruits.unshift('🍒 樱桃')">unshift(樱桃)</button>
+    <button @click="fruits.shift()">shift()</button>
+    <button @click="fruits.reverse()">reverse()</button>
+    <button @click="fruits.sort()">sort()</button>
+  </div>
+  <button @click="resetFruits" style="font-size: 12px;">重置</button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 这些方法直接修改原数组，Vue 会自动检测变化并更新视图
+  </p>
+</div>
+
+<h2>五、过滤与排序（计算属性）</h2>
+<div style="background: #f8f0ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>原始数据：</strong>{{ numbers.join(', ') }}</p>
+  <p><strong>偶数过滤：</strong>
+    <span v-for="n in evenNumbers" :key="'e'+n" style="margin-right: 6px; padding: 2px 8px; background: #e8f5e9; border-radius: 4px;">
+      {{ n }}
+    </span>
+    <span v-if="evenNumbers.length === 0" style="color: #999;">无</span>
+  </p>
+  <div style="margin: 8px 0;">
+    <button @click="sortDir = sortDir === 'asc' ? 'desc' : 'asc'">
+      排序: {{ sortDir === 'asc' ? '升序 ↑' : '降序 ↓' }}
+    </button>
+  </div>
+  <p><strong>排序结果：</strong>
+    <span v-for="(n, i) in sortedNumbers" :key="'s'+i" style="margin-right: 6px; padding: 2px 8px; background: #fff3e0; border-radius: 4px;">
+      {{ n }}
+    </span>
+  </p>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 用 computed 过滤/排序，原始数据始终不变（对比上方数组变更方法的 reverse/sort 会改原数组）
+  </p>
+</div>

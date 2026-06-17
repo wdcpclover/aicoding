@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>let 和 const</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>let 和 const</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+
+        // ====== let：可修改 ======
+        let age = 20
+        r.push('刚声明: let age = ' + age)
+        age = 21
+        r.push('修改后: age = ' + age)
+
+        // ====== const：不可修改 ======
+        const name = '小明'
+        r.push('\nconst name = ' + name)
+        r.push('// name = "小红"  ← 取消注释会报错: TypeError: Assignment to constant variable.')
+
+        // ====== const 的细节：对象本身不能换，但内部属性可以改 ======
+        const student = { name: '小红', age: 19 }
+        student.age = 20    // ✅ 改对象的属性，OK
+        // student = {}     // ❌ 整个换掉，报错
+        r.push('\nconst student.age 改成 20: ' + student.age)
+        r.push('（const 锁的是"指向"，不是"内容"）')
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

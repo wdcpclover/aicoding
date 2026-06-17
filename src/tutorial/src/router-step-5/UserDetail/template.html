@@ -1,0 +1,11 @@
+<div>
+  <h3>📇 用户详情</h3>
+  <p>从 props 接收的 ID：<code>{{ id }}</code></p>
+  <p>姓名：<strong>{{ user ? user.name : '未知用户' }}</strong></p>
+
+  <p style="font-size: 12px; color: #888; margin-top: 10px;">
+    💡 组件完全通过 <code>props</code> 拿到 id，没有直接依赖 <code>$route</code>，单元测试时更好写。
+  </p>
+
+  <RouterLink :to="{ name: 'home' }">← 返回首页</RouterLink>
+</div>

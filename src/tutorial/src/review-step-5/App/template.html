@@ -1,0 +1,37 @@
+<div class="page">
+  <h2>① 登录 + Token 持久化</h2>
+
+  <!-- 未登录：显示登录表单 -->
+  <form v-if="!isLoggedIn" class="login" @submit.prevent="login">
+    <label>学号
+      <input v-model="form.student_id" placeholder="学号" required>
+    </label>
+    <label>密码
+      <input v-model="form.password" type="password" placeholder="密码" required>
+    </label>
+    <button type="submit" :disabled="loading">{{ loading ? '登录中...' : '登录' }}</button>
+    <p v-if="error" class="error">⚠️ {{ error }}</p>
+    <p class="muted">随便填学号密码都能登录（mock 后端）；登录成功 token 固定为 zzu123456</p>
+  </form>
+
+  <!-- 已登录 -->
+  <div v-else class="profile">
+    <p>👋 欢迎，<b>{{ user.name }}</b>（学号 {{ user.student_id }}）</p>
+    <p class="token">localStorage.token = <code>{{ token }}</code></p>
+    <button class="ghost" @click="logout">退出登录</button>
+
+    <hr>
+    <p class="muted">下面两个按钮验证「请求拦截器自动带 token」：</p>
+    <div class="row">
+      <button @click="callProtected">带 token 调受保护接口</button>
+      <button class="ghost" @click="callWithoutToken">假装没 token 再调一次</button>
+    </div>
+    <p v-if="probe" class="probe">{{ probe }}</p>
+
+    <hr>
+    <p class="tip">
+      💡 <b>刷新本页面</b>（或重开浏览器）——token 还在，依然是登录态。<br>
+      因为 token 存在 <code>localStorage</code>，组件初始化时优先从它读值。
+    </p>
+  </div>
+</div>

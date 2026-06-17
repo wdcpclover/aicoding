@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>异步编程</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; min-height: 40px; }
+        button { padding: 8px 16px; margin: 5px; cursor: pointer; border: none; background: #42b983; color: white; border-radius: 5px; }
+        button:hover { background: #35495e; }
+    </style>
+</head>
+<body>
+    <h1>异步编程</h1>
+
+    <h2>1. setTimeout（定时器）</h2>
+    <button onclick="timerDemo()">点我，2 秒后显示消息</button>
+    <div id="timer-output" class="output">等待中...</div>
+
+    <h2>2. Promise</h2>
+    <button onclick="promiseDemo()">模拟请求（1秒后返回）</button>
+    <div id="promise-output" class="output">等待操作...</div>
+
+    <h2>3. async/await（推荐写法）</h2>
+    <button onclick="asyncDemo()">async/await 方式请求</button>
+    <div id="async-output" class="output">等待操作...</div>
+
+    <h2>4. fetch 请求真实 API</h2>
+    <button onclick="fetchDemo()">获取一条随机建议（英文）</button>
+    <div id="fetch-output" class="output">点击按钮获取数据...</div>
+
+    <h2>5. 同步 vs 异步的执行顺序</h2>
+    <button onclick="orderDemo()">观察执行顺序</button>
+    <div id="order-output" class="output">点击按钮...</div>
+
+    <script>
+        // 1. setTimeout
+        function timerDemo() {
+            document.getElementById('timer-output').textContent = '计时开始...';
+            setTimeout(() => {
+                document.getElementById('timer-output').textContent = '2 秒到了！消息出现了！';
+            }, 2000);
+        }
+
+        // 2. Promise
+        function mockRequest(data) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (data) {
+                        resolve('请求成功，数据: ' + data);
+                    } else {
+                        reject('请求失败：没有数据');
+                    }
+                }, 1000);
+            });
+        }
+
+        function promiseDemo() {
+            document.getElementById('promise-output').textContent = '请求中...';
+            mockRequest('Hello Promise')
+                .then(result => {
+                    document.getElementById('promise-output').textContent = result;
+                })
+                .catch(error => {
+                    document.getElementById('promise-output').textContent = error;
+                });
+        }
+
+        // 3. async/await
+        async function asyncDemo() {
+            const output = document.getElementById('async-output');
+            output.textContent = '请求中...';
+            try {
+                const result = await mockRequest('Hello Async/Await');
+                output.textContent = result;
+            } catch (error) {
+                output.textContent = error;
+            }
+        }
+
+        // 4. fetch 真实 API
+        async function fetchDemo() {
+            const output = document.getElementById('fetch-output');
+            output.textContent = '正在请求...';
+            try {
+                const response = await fetch('https://api.adviceslip.com/advice');
+                const data = await response.json();
+                output.textContent = '随机建议: ' + data.slip.advice;
+            } catch (error) {
+                output.textContent = '请求失败: ' + error.message;
+            }
+        }
+
+        // 5. 执行顺序
+        function orderDemo() {
+            const lines = [];
+            lines.push('1. 同步代码先执行');
+
+            setTimeout(() => {
+                lines.push('3. setTimeout 最后执行（异步）');
+                document.getElementById('order-output').textContent = lines.join('\n');
+            }, 0);
+
+            Promise.resolve().then(() => {
+                lines.push('2. Promise.then 中间执行（微任务）');
+            });
+
+            lines.push('1.5 同步代码继续执行');
+            document.getElementById('order-output').textContent = lines.join('\n') + '\n（等一下会多出异步的结果...）';
+        }
+    </script>
+</body>
+</html>

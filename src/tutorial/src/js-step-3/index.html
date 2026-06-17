@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数据类型与 typeof</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>数据类型与 typeof</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+        r.push('=== 7 种数据类型 + typeof ===')
+
+        const greeting = '你好世界'
+        r.push(`字符串:    ${greeting}     → typeof: ${typeof greeting}`)
+
+        const score = 95.5
+        r.push(`数字:      ${score}         → typeof: ${typeof score}`)
+
+        const isStudent = true
+        r.push(`布尔:      ${isStudent}       → typeof: ${typeof isStudent}`)
+
+        let something
+        r.push(`undefined: ${something}    → typeof: ${typeof something}`)
+
+        const empty = null
+        r.push(`null:      ${empty}         → typeof: ${typeof empty}   ← JS 历史 bug`)
+
+        const hobbies = ['打游戏', '听音乐', '写代码']
+        r.push(`数组:      [${hobbies}]`)
+        r.push(`           → typeof: ${typeof hobbies}    长度: ${hobbies.length}`)
+
+        const student = { name: '小明', age: 20, major: '计算机' }
+        r.push(`对象:      ${JSON.stringify(student)}`)
+        r.push(`           → typeof: ${typeof student}`)
+
+        r.push('\n=== 准确判断类型的正确姿势 ===')
+        r.push(`Array.isArray([])  →  ${Array.isArray([])}    ← 判断数组用这个`)
+        r.push(`null === null      →  ${null === null}    ← 判断 null 用 ===`)
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

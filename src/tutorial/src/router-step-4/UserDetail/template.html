@@ -1,0 +1,10 @@
+<div>
+  <h3>📇 用户详情</h3>
+  <p>当前 ID：<code>{{ $route.params.id }}</code></p>
+
+  <div style="margin-top: 12px;">
+    <button class="btn btn-outline" @click="$router.back()">← 返回</button>
+    <button class="btn btn-outline" @click="$router.push('/')">回首页</button>
+    <button class="btn" @click="goNext">下一个用户 →</button>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="view">
+  <h2>登录</h2>
+  <p class="muted">未登录访问活动页会被守卫拦到这里。随便填即可登录。</p>
+  <form class="login" @submit.prevent="login">
+    <input v-model="form.student_id" placeholder="学号" required>
+    <input v-model="form.password" type="password" placeholder="密码" required>
+    <button type="submit" :disabled="loading">{{ loading ? '登录中...' : '登录' }}</button>
+    <p v-if="error" class="muted" style="color:#e74c3c">⚠️ {{ error }}</p>
+  </form>
+</div>

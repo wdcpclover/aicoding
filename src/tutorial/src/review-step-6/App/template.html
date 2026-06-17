@@ -1,0 +1,26 @@
+<div class="page">
+  <h2>② Pinia store：列表 / 搜索 / loading</h2>
+
+  <!-- 搜索框：v-model 双向绑到 store.keyword，回车或点按钮触发 fetchList -->
+  <form class="search" @submit.prevent="fetchList">
+    <input v-model="keyword" placeholder="按活动名称搜索，如「编程」">
+    <button type="submit" :disabled="loading">搜索</button>
+  </form>
+
+  <p v-if="loading" class="muted">加载中...</p>
+  <p v-else-if="error" class="error">⚠️ {{ error }}</p>
+  <p v-else class="muted">共 <b>{{ total }}</b> 个活动（数据都在 store.list 里）</p>
+
+  <ul class="list">
+    <li v-for="a in list" :key="a.id">
+      <b>{{ a.title }}</b>
+      <span class="meta">📍{{ a.location }} · 🕒{{ a.start_time }} · 👥{{ a.participants }}人</span>
+    </li>
+  </ul>
+
+  <p class="tip">
+    💡 数据、搜索词、loading 全部放在 <code>store</code> 里 —— 这就是「单一数据源」。<br>
+    任何组件 <code>useActivityStore()</code> 拿到的都是<b>同一份</b>。<br>
+    试一下：搜「编程」「简历」，或清空再搜。
+  </p>
+</div>

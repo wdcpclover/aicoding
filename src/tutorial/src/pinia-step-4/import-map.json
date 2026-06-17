@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "pinia": "/pinia.esm-browser.js"
+  }
+}

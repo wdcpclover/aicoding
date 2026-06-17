@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>类型转换与模板字符串</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>类型转换与模板字符串</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+
+        r.push('=== 自动类型转换的坑 ===')
+        r.push(`'3' + 2     → ${'3' + 2}    （字符串拼接）`)
+        r.push(`3 + '2'     → ${3 + '2'}    （字符串拼接）`)
+        r.push(`'6' - 2     → ${'6' - 2}     （减号会把字符串转数字）`)
+        r.push(`'3' * '4'   → ${'3' * '4'}    （乘号同理）`)
+
+        r.push('\n=== 手动转换 ===')
+        r.push(`Number('42')         → ${Number('42')}`)
+        r.push(`String(42)           → "${String(42)}"`)
+        r.push(`parseInt('3.14')     → ${parseInt('3.14')}`)
+        r.push(`parseFloat('3.14')   → ${parseFloat('3.14')}`)
+
+        r.push('\n=== 假值列表（在 if 里都是 false）===')
+        const falsy = [0, '', null, undefined, NaN, false]
+        falsy.forEach(v => {
+            r.push(`${JSON.stringify(v) ?? 'undefined'}  → if 判定: ${v ? 'true' : 'false'}`)
+        })
+        r.push("'0' → if 判定: " + ('0' ? 'true' : 'false') + '   （注意：非空字符串是真值！）')
+        r.push("[]  → if 判定: " + ([]  ? 'true' : 'false') + '   （空数组也是真值）')
+        r.push("{}  → if 判定: " + ({}  ? 'true' : 'false') + '   （空对象也是真值）')
+
+        r.push('\n=== 模板字符串 ===')
+        const name = '小明'
+        const age = 20
+        r.push(`我叫${name}，今年${age}岁`)
+        r.push(`1 + 1 = ${1 + 1}`)
+        r.push(`大写姓名: ${name.toUpperCase()}`)
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

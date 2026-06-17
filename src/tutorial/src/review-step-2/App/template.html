@@ -1,0 +1,13 @@
+<div class="app">
+  <!-- router-link 生成导航；active 类自动加在当前路由上 -->
+  <nav class="nav">
+    <RouterLink to="/">首页</RouterLink>
+    <RouterLink to="/about">关于</RouterLink>
+    <RouterLink to="/users/7">用户 #7</RouterLink>
+  </nav>
+
+  <!-- 匹配到的页面渲染在这里 -->
+  <main class="view">
+    <RouterView />
+  </main>
+</div>

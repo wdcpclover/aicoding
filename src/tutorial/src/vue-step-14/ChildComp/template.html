@@ -1,0 +1,26 @@
+<div style="background: #fff3e0; padding: 12px; border-radius: 8px;">
+  <p style="margin: 0 0 8px; font-weight: bold; color: #e65100;">🧒 子组件区域</p>
+
+  <div style="margin-bottom: 12px;">
+    <span style="font-size: 13px;">二、点击触发事件：</span>
+    <button @click="$emit('increment', 1)" style="margin-left: 8px;">+1</button>
+    <button @click="$emit('increment', 5)" style="margin-left: 4px;">+5</button>
+  </div>
+
+  <div style="border-top: 1px solid #ffe0b2; padding-top: 10px;">
+    <span style="font-size: 13px;">三、表单提交（多参数）：</span>
+    <div style="display: flex; gap: 8px; margin: 8px 0;">
+      <input v-model="formName" placeholder="姓名" style="flex: 1;" />
+      <input v-model.number="formScore" type="number" placeholder="分数" style="width: 80px;" />
+    </div>
+    <button @click="handleSubmit">提交给父组件</button>
+  </div>
+
+  <div style="border-top: 1px solid #ffe0b2; padding-top: 10px; margin-top: 10px;">
+    <span style="font-size: 13px;">四、v-model 双向绑定：</span>
+    <div style="margin: 8px 0;">
+      <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" placeholder="在子组件中输入..." style="width: 100%;" />
+    </div>
+    <p style="color: #888; font-size: 12px; margin: 4px 0 0;">💡 子组件通过 :value 接收 prop，通过 @input 触发 emit</p>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="page">
+  <h2>③ 列表页 + 卡片组件（props）</h2>
+
+  <form class="search" @submit.prevent="fetchList">
+    <input v-model="keyword" placeholder="搜索活动名称">
+    <button type="submit" :disabled="loading">搜索</button>
+  </form>
+
+  <p v-if="picked" class="picked">{{ picked }}</p>
+
+  <p v-if="loading" class="muted">加载中...</p>
+
+  <!-- 父组件 v-for 循环，把每条活动用 :activity 传给子组件 -->
+  <!-- 监听子组件 @view 事件，拿到被点的 id -->
+  <div class="grid">
+    <ActivityCard
+      v-for="a in list"
+      :key="a.id"
+      :activity="a"
+      @view="onView"
+    />
+  </div>
+
+  <p class="tip">
+    💡 <b>父传子用 props</b>：<code>&lt;ActivityCard :activity="a" /&gt;</code><br>
+    💡 <b>子传父用 emit</b>：卡片被点 → <code>emit('view', id)</code> → 父组件 <code>@view="onView"</code> 收到。<br>
+    💡 卡片组件<b>只负责展示</b>，不碰数据请求 —— 这就是「组件复用」。
+  </p>
+</div>

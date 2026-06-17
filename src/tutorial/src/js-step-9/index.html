@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>对象 / 解构 / 展开 / 对象方法</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>对象 / 解构 / 展开 / 对象方法</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+
+        // ====== 对象基础 ======
+        r.push('=== 对象基础 ===')
+        const student = {
+            name: '小明',
+            age: 20,
+            hobbies: ['写代码', '打游戏'],
+            score: { math: 95, english: 88 }
+        }
+        r.push('student.name        = ' + student.name)
+        r.push("student['age']      = " + student['age'])
+        r.push('student.score.math  = ' + student.score.math)
+
+        // ====== 常用对象操作 ======
+        r.push('\n=== Object.keys / values / entries ===')
+        const simple = { name: '小红', age: 19, major: '计算机' }
+        r.push('keys    = ' + JSON.stringify(Object.keys(simple)))
+        r.push('values  = ' + JSON.stringify(Object.values(simple)))
+        r.push('entries = ' + JSON.stringify(Object.entries(simple)))
+
+        // ====== 解构赋值 ======
+        r.push('\n=== 解构 ===')
+        const { name, age } = student
+        r.push(`const { name, age } = student → name=${name}, age=${age}`)
+
+        const { name: studentName } = student
+        r.push(`重命名 { name: studentName } → studentName=${studentName}`)
+
+        const { phone = '未填写' } = student
+        r.push(`默认值 { phone = '未填写' }   → phone=${phone}`)
+
+        const { score: { math } } = student
+        r.push(`嵌套 { score: { math } }      → math=${math}`)
+
+        // ====== 展开运算符 ======
+        r.push('\n=== 展开运算符 ...')
+        const updated = { ...student, age: 21, grade: '大三' }
+        r.push('修改 age + 新增 grade:')
+        r.push(JSON.stringify(updated))
+
+        // ====== 可选链 ======
+        r.push('\n=== 可选链 ?. ===')
+        const user = { name: '小红', address: null }
+        r.push('user.name?.length   = ' + user.name?.length)
+        r.push('user.address?.city  = ' + user.address?.city + '   （不报错，得到 undefined）')
+        r.push('user.phone?.number  = ' + user.phone?.number + '   （phone 根本不存在，也不报错）')
+
+        // ====== 对象方法 + this ======
+        r.push('\n=== 对象方法 + this ===')
+        const me = {
+            name: '小明',
+            age: 20,
+            score: 95,
+            introduce() {
+                return `你好，我叫 ${this.name}，今年 ${this.age} 岁`
+            },
+            getGrade() {
+                if (this.score >= 90) return `${this.name} 成绩 ${this.score} → 优秀`
+                if (this.score >= 60) return `${this.name} 成绩 ${this.score} → 及格`
+                return `${this.name} 成绩 ${this.score} → 不及格`
+            },
+            birthday() {
+                this.age++
+                return `${this.name} 过生日，现在 ${this.age} 岁！`
+            }
+        }
+        r.push(me.introduce())
+        r.push(me.getGrade())
+        r.push(me.birthday())
+        r.push(me.introduce())   // age 已变化
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

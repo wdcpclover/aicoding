@@ -1,0 +1,74 @@
+<div class="panel">
+  <div class="health" :class="health.status">
+    <span class="dot"></span>
+    <b>{{ health.label }}</b>
+    <span class="hint">{{ health.hint }}</span>
+    <button class="recheck" @click="checkHealth">重新检查</button>
+  </div>
+
+  <h2>RESTful 五件套</h2>
+  <p class="lead">5 种动作对着同一个 <code>/api/users</code> 资源 —— 看 axios 怎么写、看后端怎么变。</p>
+
+  <!-- ① 列表 + ② 详情 -->
+  <section class="card">
+    <div class="card-head">
+      <h3>① <code>axios.get('/api/users')</code> &nbsp;&nbsp;② <code>axios.get('/api/users/:id')</code></h3>
+      <button @click="loadList" :disabled="loading || health.status !== 'ok'">🔄 刷新列表</button>
+    </div>
+
+    <p v-if="loading" class="status">请求中...</p>
+    <p v-else-if="error" class="error">⚠️ {{ error }}</p>
+
+    <table v-else-if="users.length" class="users">
+      <thead>
+        <tr><th>id</th><th>name</th><th>email</th><th>age</th><th>操作</th></tr>
+      </thead>
+      <tbody>
+        <tr v-for="u in users" :key="u.id" :class="{ active: detail && detail.id === u.id }">
+          <td>{{ u.id }}</td>
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.age }}</td>
+          <td class="ops">
+            <button class="mini" @click="loadDetail(u.id)">👁 详情</button>
+            <button class="mini" @click="bumpAge(u)">🎂 +1</button>
+            <button class="mini danger" @click="remove(u.id)">🗑 删</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p v-else class="empty">点上方"刷新列表"开始</p>
+
+    <div v-if="detail" class="detail">
+      <b>👁 详情（GET /api/users/{{ detail.id }}）：</b>
+      <pre>{{ JSON.stringify(detail, null, 2) }}</pre>
+    </div>
+  </section>
+
+  <!-- ③ 新增 -->
+  <section class="card">
+    <div class="card-head">
+      <h3>③ <code>axios.post('/api/users', data)</code></h3>
+    </div>
+    <p class="hint-line">第二个参数 <code>data</code> 是请求体 —— axios 自动 JSON 序列化。</p>
+
+    <div class="form">
+      <input v-model="form.name"  placeholder="name">
+      <input v-model="form.email" placeholder="email">
+      <input v-model.number="form.age" placeholder="age" type="number" style="width: 70px">
+      <button @click="create" :disabled="loading || !form.name || !form.email">➕ 新增</button>
+    </div>
+  </section>
+
+  <!-- 完整 res 展开 -->
+  <details v-if="rawRes" class="raw">
+    <summary>📋 最近一次响应对象 <code>res</code>（对照「第五、响应对象」字段表）</summary>
+    <table class="raw-table">
+      <tr><th><code>res.config.method</code></th><td>{{ rawRes.config.method }}</td></tr>
+      <tr><th><code>res.config.url</code></th>   <td class="wrap">{{ rawRes.config.url }}</td></tr>
+      <tr><th><code>res.config.data</code></th>  <td><pre>{{ rawRes.config.data || '(无 body)' }}</pre></td></tr>
+      <tr><th><code>res.status</code></th>       <td><b class="ok">{{ rawRes.status }} {{ rawRes.statusText }}</b></td></tr>
+      <tr><th><code>res.data</code></th>         <td><pre class="data">{{ rawRes.data }}</pre></td></tr>
+    </table>
+  </details>
+</div>

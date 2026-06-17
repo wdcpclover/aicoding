@@ -1,0 +1,64 @@
+<h2>一、声明响应式状态</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>count:</strong> {{ count }}</p>
+  <p><strong>message:</strong> {{ message }}</p>
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <button @click="increment">count++</button>
+    <button @click="count--">count--</button>
+    <button @click="message = 'Hi Vue 3!'" style="margin-left: auto;">修改 message</button>
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 试试修改右侧代码中的初始值，然后观察这里的变化
+  </p>
+</div>
+
+<h2>二、<span class="composition-api">ref() vs reactive()</span><span class="options-api">methods 方法</span></h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>state.name:</strong> {{ state.name }}</p>
+  <p><strong>state.version:</strong> {{ state.version }}</p>
+  <button @click="updateState">修改 state</button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 <span class="composition-api">reactive 对象直接修改属性，不需要 .value</span>
+    <span class="options-api">methods 中通过 this.state 访问和修改</span>
+  </p>
+</div>
+
+<h2>三、深层响应性</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>obj.nested.count:</strong> {{ obj.nested.count }}</p>
+  <p><strong>obj.arr:</strong> [{{ obj.arr.join(', ') }}]</p>
+  <button @click="mutateDeeply">修改嵌套数据</button>
+  <button @click="resetObj" style="margin-left: 8px;">重置</button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 嵌套对象和数组的变化也能被自动检测到
+  </p>
+</div>
+
+<h2>四、DOM 更新时机 (nextTick)</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p id="dom-msg"><strong>消息:</strong> {{ domMsg }}</p>
+  <div v-if="domLogs.length" style="background: #fff3e0; padding: 8px; border-radius: 4px; margin: 8px 0; font-size: 13px;">
+    <p v-for="(log, i) in domLogs" :key="i" :style="{ color: log.color, margin: '2px 0' }">
+      {{ log.text }}
+    </p>
+  </div>
+  <button @click="testNextTick">测试 nextTick</button>
+  <button @click="domLogs = []; domMsg = '点击按钮测试'" style="margin-left: 8px;">清除日志</button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 点击按钮，观察"修改后立即读取"和"nextTick 后读取"的区别
+  </p>
+</div>
+
+<h2>五、模板表达式</h2>
+<div style="background: #f8f0ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>count + 1 =</strong> {{ count + 1 }}</p>
+  <p><strong>message 反转 =</strong> {{ message.split('').reverse().join('') }}</p>
+  <p><strong>message 长度 =</strong> {{ message.length }}</p>
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <button @click="count += 10">count += 10</button>
+    <button @click="message = message.split('').reverse().join('')">反转 message</button>
+  </div>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 模板中可以直接写 JS 表达式，响应式数据变化时自动重新求值
+  </p>
+</div>

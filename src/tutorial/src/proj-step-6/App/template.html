@@ -1,0 +1,42 @@
+<div class="panel">
+  <div class="health" :class="health.status">
+    <span class="dot"></span>
+    <b>{{ health.label }}</b>
+    <span class="hint">{{ health.hint }}</span>
+    <button class="recheck" @click="checkHealth">重新检查</button>
+  </div>
+
+  <div class="browser">
+    <header class="b-head">
+      <span class="b-title">📁 chatbox/</span>
+      <span class="b-meta">{{ files.length }} 个文件 · 真实源码</span>
+    </header>
+
+    <div class="tabs">
+      <button
+        v-for="(f, i) in files"
+        :key="f.name"
+        class="tab"
+        :class="{ active: idx === i }"
+        @click="idx = i"
+      >
+        <span class="t-icon">{{ icon(f) }}</span>
+        <span class="t-name">{{ f.name }}</span>
+      </button>
+    </div>
+
+    <div class="code-wrap">
+      <header class="c-head">
+        <span class="path">{{ current.name }}</span>
+        <span class="lang">{{ current.lang }}</span>
+        <span class="lines">{{ lineCount }} 行</span>
+        <button class="copy" @click="copy">{{ copied ? '✓ 已复制' : '复制' }}</button>
+      </header>
+      <pre class="code"><code>{{ current.code }}</code></pre>
+    </div>
+  </div>
+
+  <p class="footnote">
+    💡 这里展示的是 <code>chatbox/</code> 项目里的**真实源码**——克隆代码后跟着教程一边读一边对照本机文件。
+  </p>
+</div>

@@ -1,0 +1,20 @@
+<h2>provide / inject 跨层级通信</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p style="margin: 0 0 8px;">🏠 <strong>App（根组件）</strong>— provide 数据：</p>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <label style="font-size: 13px;">
+      用户名：<input v-model="userName" style="width: 80px;" />
+    </label>
+    <label style="font-size: 13px;">
+      主题色：<input v-model="themeColor" type="color" />
+    </label>
+  </div>
+
+  <div style="border: 2px dashed #aaa; padding: 10px; border-radius: 8px;">
+    <ChildComp />
+  </div>
+
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 修改上方的用户名和主题色，观察孙组件是否实时更新（注意对比组合式和选项式的区别）
+  </p>
+</div>

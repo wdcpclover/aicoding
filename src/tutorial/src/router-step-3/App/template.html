@@ -1,0 +1,15 @@
+<h2>🪆 嵌套路由</h2>
+
+<nav class="nav">
+  <RouterLink to="/">用户列表</RouterLink>
+  <RouterLink to="/users/1">用户 1</RouterLink>
+  <RouterLink to="/users/2">用户 2</RouterLink>
+</nav>
+
+<div class="page">
+  <RouterView />
+</div>
+
+<p style="color: #888; font-size: 12px; margin-top: 12px;">
+  💡 进入用户详情后注意：外层 <code>App.vue</code> 的 RouterView 渲染 <code>User.vue</code>，它内部的另一个 RouterView 才渲染 Profile / Posts。
+</p>

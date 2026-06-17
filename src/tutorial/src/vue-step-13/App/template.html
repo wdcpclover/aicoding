@@ -1,0 +1,45 @@
+<h2>一、基础 Props 传递</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p>父组件数据：<strong>{{ greeting }}</strong></p>
+  <div style="border: 2px dashed #42b883; padding: 12px; border-radius: 8px; margin-top: 8px;">
+    <p style="color: #888; font-size: 12px; margin: 0 0 8px;">⬇️ 通过 :msg="greeting" 传给子组件：</p>
+    <ChildComp :msg="greeting" />
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 父组件用 v-bind (:) 把数据传递给子组件的 msg prop
+  </p>
+</div>
+
+<h2>二、动态 Props</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="margin-bottom: 8px;">
+    <label style="font-size: 12px; color: #666;">修改父组件数据：</label>
+    <input v-model="dynamicMsg" style="width: 100%;" placeholder="输入任意内容" />
+  </div>
+  <div style="border: 2px dashed #1976d2; padding: 12px; border-radius: 8px;">
+    <p style="color: #888; font-size: 12px; margin: 0 0 8px;">⬇️ 子组件实时响应父组件变化：</p>
+    <ChildComp :msg="dynamicMsg" />
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 父组件数据变化 → 子组件自动更新，这就是响应式 props
+  </p>
+</div>
+
+<h2>三、Props 默认值</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+    <label>
+      <input type="checkbox" v-model="showScore" /> 传递 score prop
+    </label>
+    <span v-if="showScore">
+      <input v-model.number="score" type="range" min="0" max="100" style="vertical-align: middle;" />
+      {{ score }} 分
+    </span>
+  </div>
+  <div style="border: 2px dashed #388e3c; padding: 12px; border-radius: 8px;">
+    <ChildComp :msg="'成绩展示'" :score="showScore ? score : undefined" />
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 取消勾选后不传 score，子组件使用默认值 0
+  </p>
+</div>

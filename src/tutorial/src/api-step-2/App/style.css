@@ -1,0 +1,185 @@
+.panel {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 16px;
+  max-width: 820px;
+}
+.panel h2 { margin: 8px 0 4px; font-size: 18px; }
+.panel .lead { margin: 0 0 14px; color: #666; font-size: 13px; }
+.panel code { font-size: 12px; background: #eef1f5; padding: 1px 5px; border-radius: 3px; color: #c44323; }
+
+/* —— 健康检查条 —— */
+.health {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid;
+  margin-bottom: 12px;
+}
+.health .dot {
+  width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+}
+.health b { font-weight: 600; }
+.health .hint { color: inherit; opacity: 0.7; font-size: 12px; }
+.health .recheck {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.health.checking { background: #f5f7fa; border-color: #d1d5db; color: #6b7280; }
+.health.checking .dot { background: #9ca3af; }
+.health.ok       { background: #ecfdf5; border-color: #34d399; color: #047857; }
+.health.ok .dot  { background: #10b981; }
+.health.down     { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.health.down .dot{ background: #ef4444; }
+
+/* —— 卡片 —— */
+.card {
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f5f7fa;
+  border-bottom: 1px solid #e3e8ee;
+  gap: 10px;
+}
+.card-head h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1858b0;
+}
+.card-head button,
+.actions button {
+  padding: 5px 12px;
+  font-size: 12px;
+  border: 1px solid #42b883;
+  background: #42b883;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.card-head button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.hint-line {
+  margin: 8px 14px 0;
+  font-size: 12px;
+  color: #666;
+}
+.status { margin: 10px 14px; color: #888; font-size: 13px; }
+.error  { margin: 10px 14px; color: #c4302b; font-size: 13px; }
+.empty  { margin: 14px; color: #aaa; font-size: 12px; }
+
+/* —— 用户表 —— */
+.users {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.users th, .users td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+.users th { background: #fafbfc; color: #555; font-weight: 500; }
+.users tr.active { background: #eef6ff; }
+
+.ops { display: flex; gap: 6px; }
+.mini {
+  padding: 3px 8px;
+  font-size: 11px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.mini:hover { background: #f5f7fa; }
+.mini.danger { color: #c4302b; border-color: #fca5a5; }
+.mini.danger:hover { background: #fef2f2; }
+
+.detail {
+  margin: 10px 14px 14px;
+  padding: 10px;
+  background: #f5f7fa;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.detail pre { margin: 6px 0 0; font-size: 11px; }
+
+/* —— 表单 —— */
+.form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  flex-wrap: wrap;
+}
+.form input {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  outline: none;
+  flex: 1;
+  min-width: 120px;
+}
+.form input:focus { border-color: #42b883; }
+.form button {
+  padding: 5px 14px;
+  font-size: 12px;
+  border: 1px solid #42b883;
+  background: #42b883;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* —— 完整 res 折叠 —— */
+.raw {
+  margin-top: 16px;
+  border: 1px dashed #d1d5db;
+  border-radius: 6px;
+  padding: 10px 14px;
+  background: #fafbfc;
+}
+.raw summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: #555;
+}
+.raw-table {
+  margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.raw-table th, .raw-table td {
+  padding: 5px 8px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #eee;
+}
+.raw-table th { width: 160px; color: #555; font-weight: 500; }
+.raw-table td.wrap { word-break: break-all; }
+.raw-table pre {
+  margin: 0;
+  font-size: 11px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.raw-table pre.data { max-height: 200px; overflow: auto; }
+.raw-table .ok { color: #1e7e34; }

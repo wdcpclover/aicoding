@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>回调与闭包</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+    </style>
+</head>
+<body>
+    <h1>回调与闭包</h1>
+    <div id="output" class="output"></div>
+
+    <script>
+        const r = []
+
+        // ====== 回调函数（数组方法）======
+        r.push('=== 回调：数组方法 ===')
+        const numbers = [1, 2, 3, 4, 5]
+
+        let sum = 0
+        numbers.forEach(n => { sum += n })
+        r.push('forEach 求和  → ' + sum)
+
+        const doubled = numbers.map(n => n * 2)
+        r.push('map 每个 *2   → [' + doubled + ']')
+
+        const evens = numbers.filter(n => n % 2 === 0)
+        r.push('filter 偶数   → [' + evens + ']')
+
+        const found = numbers.find(n => n > 3)
+        r.push('find 第一个>3 → ' + found)
+
+        // ====== 闭包：带私有变量的银行账户 ======
+        r.push('\n=== 闭包：私有变量 balance ===')
+        function createBankAccount(owner, initialBalance = 0) {
+            let balance = initialBalance   // 私有变量，外部访问不到
+            return {
+                owner,
+                deposit(amount) {
+                    balance += amount
+                    return `${this.owner} 存入 ¥${amount}，余额：¥${balance}`
+                },
+                withdraw(amount) {
+                    if (amount > balance) return `余额不足，当前 ¥${balance}`
+                    balance -= amount
+                    return `${this.owner} 取出 ¥${amount}，余额：¥${balance}`
+                },
+                getBalance() {
+                    return `${this.owner} 余额：¥${balance}`
+                }
+            }
+        }
+
+        const account = createBankAccount('小明', 1000)
+        r.push(account.getBalance())
+        r.push(account.deposit(500))
+        r.push(account.withdraw(200))
+        r.push(account.withdraw(2000))   // 余额不足
+        r.push(account.getBalance())
+        r.push('\n注意: 外部直接访问 account.balance → ' + account.balance + ' （undefined，被闭包"关"住了）')
+
+        document.getElementById('output').textContent = r.join('\n')
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<div class="view">
+  <h2>校园活动列表</h2>
+  <form class="search" @submit.prevent="fetchList">
+    <input v-model="keyword" placeholder="搜索活动名称">
+    <button type="submit" :disabled="loading">搜索</button>
+  </form>
+
+  <p v-if="loading" class="muted">加载中...</p>
+
+  <div class="grid">
+    <ActivityCard
+      v-for="a in list"
+      :key="a.id"
+      :activity="a"
+      @view="goDetail"
+    />
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div style="display: flex; align-items: center; background: #f5f5f5; border-radius: 20px; padding: 8px 14px; gap: 10px; border: 1px solid #e0e0e0;">
+  <div style="flex-shrink: 0;">
+    <slot name="left">
+      <span style="font-size: 16px;">🔍</span>
+    </slot>
+  </div>
+  <div style="flex: 1;">
+    <slot>
+      <input type="text" placeholder="搜索商品" style="width: 100%; border: none; background: transparent; outline: none; font-size: 14px;" />
+    </slot>
+  </div>
+  <div style="flex-shrink: 0;">
+    <slot name="right"></slot>
+  </div>
+</div>

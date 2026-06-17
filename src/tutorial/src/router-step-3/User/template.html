@@ -1,0 +1,17 @@
+<div>
+  <h3>📇 用户 {{ $route.params.id }}</h3>
+
+  <nav class="sub-nav">
+    <RouterLink :to="`/users/${$route.params.id}`">Profile</RouterLink>
+    <RouterLink :to="`/users/${$route.params.id}/posts`">Posts</RouterLink>
+  </nav>
+
+  <div class="sub-view">
+    <!-- 子路由的渲染出口 -->
+    <RouterView />
+  </div>
+
+  <p style="margin-top: 10px;">
+    <RouterLink to="/">← 返回列表</RouterLink>
+  </p>
+</div>

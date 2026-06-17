@@ -1,0 +1,46 @@
+<h2>一、文本插值 {{ }}</h2>
+<p>消息: {{ message }}</p>
+<p>反转: {{ message.split('').reverse().join('') }}</p>
+
+<h2>二、原始 HTML (v-html)</h2>
+<p>文本插值: {{ rawHtml }}</p>
+<p>v-html 指令: <span v-html="rawHtml"></span></p>
+
+<h2>三、Attribute 绑定 (v-bind / :)</h2>
+<p>下面的 div 绑定了动态 id：</p>
+<div :id="dynamicId" style="padding: 4px; background: #fff3e0;">
+  我的 id 是: {{ dynamicId }}
+</div>
+
+<h2>四、布尔型 Attribute</h2>
+<button :disabled="isButtonDisabled">
+  {{ isButtonDisabled ? '按钮已禁用' : '按钮可点击' }}
+</button>
+<button @click="toggleButton" style="margin-left: 8px;">
+  切换禁用状态
+</button>
+
+<h2>五、动态绑定多个属性 (v-bind="obj")</h2>
+<div v-bind="objectOfAttrs">
+  这个 div 的 id、class、style 都是动态绑定的
+</div>
+
+<h2>六、JavaScript 表达式</h2>
+<p>number + 1 = {{ number + 1 }}</p>
+<p>ok ? 'YES' : 'NO' → {{ ok ? 'YES' : 'NO' }}</p>
+<p>模板字符串绑定 id：</p>
+<div :id="`list-${number}`" style="padding: 4px; background: #e3f2fd;">
+  我的 id 是: list-{{ number }}
+</div>
+
+<h2>七、指令：v-if 条件渲染</h2>
+<p v-if="seen">你看到我了！(seen = true)</p>
+<p v-else>我被隐藏了！(seen = false)</p>
+<button @click="toggleSeen">切换显示</button>
+
+<h2>八、v-on 事件绑定 (@)</h2>
+<p>计数器: {{ counter.count }}</p>
+<button @click="increment">点击 +1</button>
+
+<h2>九、链接绑定</h2>
+<a :href="url" target="_blank">访问 Vue 官网 →</a>

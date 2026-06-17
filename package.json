@@ -1,0 +1,29 @@
+{
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "preinstall": "npx only-allow pnpm",
+    "type": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@vue/repl": "^4.4.2",
+    "@vue/theme": "^2.3.0",
+    "dynamics.js": "^1.1.5",
+    "gsap": "^3.12.5",
+    "vitepress": "^1.4.3",
+    "vue": "^3.5.12"
+  },
+  "devDependencies": {
+    "@types/body-scroll-lock": "^3.1.2",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3",
+    "vue-tsc": "^2.1.6"
+  },
+  "packageManager": "pnpm@9.12.1"
+}

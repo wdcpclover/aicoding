@@ -1,0 +1,37 @@
+[
+  {
+    "name": "web/.env.development",
+    "lang": "env",
+    "code": "# 开发环境：后端跑在本机 3002\nVITE_API_BASE=http://localhost:3002\n"
+  },
+  {
+    "name": "web/.env.production",
+    "lang": "env",
+    "code": "# 生产环境：\n#   - 如果前后端同域部署（推荐，最省心），留空即可：\n#     vite build 出来的静态文件由 Express 直接 serve，\n#     前端请求 /api/xxx 自动打到同一个 origin\nVITE_API_BASE=\n\n# 或者填外部域名（前后端分开部署时）：\n# VITE_API_BASE=https://chatbox-api.example.com\n"
+  },
+  {
+    "name": "web/src/api/request.js",
+    "lang": "js",
+    "code": "// =============================================================\n//  src/api/request.js\n//  axios 实例 + 拦截器：\n//    - baseURL 来自环境变量 VITE_API_BASE（开发/生产自动切换）\n//    - 自动加 Authorization\n//    - 自动剥 .data\n//    - 401 → 清 token + 通知路由跳登录\n// =============================================================\n\nimport axios from 'axios'\n\nconst request = axios.create({\n  // 开发环境：http://localhost:3002（.env.development）\n  // 生产环境：留空 → 走相对路径 /api/xxx → 同域部署最省心\n  baseURL: import.meta.env.VITE_API_BASE || '',\n  timeout: 30000\n})\n\n// ——— 请求拦截器：自动带 token ———\nrequest.interceptors.request.use(config => {\n  const token = localStorage.getItem('chatbox_token')\n  if (token) config.headers.Authorization = `Bearer ${token}`\n  return config\n})\n\n// ——— 响应拦截器：剥 .data + 统一处理 401 ———\nlet onUnauthorized = null\nexport function setUnauthorizedHandler(fn) {\n  onUnauthorized = fn\n}\n\nrequest.interceptors.response.use(\n  res => res.data,\n  err => {\n    if (err.response?.status === 401) {\n      localStorage.removeItem('chatbox_token')\n      onUnauthorized?.()\n    }\n    return Promise.reject(err)\n  }\n)\n\nexport default request\n"
+  },
+  {
+    "name": "web/src/api/auth.js",
+    "lang": "js",
+    "code": "import request from './request'\n\nexport const authApi = {\n  register: ({ username, password }) =>\n    request.post('/api/auth/register', { username, password }),\n\n  login: ({ username, password }) =>\n    request.post('/api/auth/login', { username, password }),\n\n  me: () => request.get('/api/auth/me')\n}\n"
+  },
+  {
+    "name": "web/src/api/conversations.js",
+    "lang": "js",
+    "code": "import request from './request'\n\nexport const conversationsApi = {\n  list:   ()         => request.get('/api/conversations'),\n  create: (title)    => request.post('/api/conversations', { title }),\n  rename: (id, title)=> request.patch(`/api/conversations/${id}`, { title }),\n  remove: (id)       => request.delete(`/api/conversations/${id}`)\n}\n"
+  },
+  {
+    "name": "web/src/api/messages.js",
+    "lang": "js",
+    "code": "import request from './request'\n\nexport const messagesApi = {\n  list:   (convId)         => request.get(`/api/conversations/${convId}/messages`),\n  send:   (convId, content)=> request.post(`/api/conversations/${convId}/messages`, { content })\n}\n"
+  },
+  {
+    "name": "web/src/api/settings.js",
+    "lang": "js",
+    "code": "import request from './request'\n\nexport const settingsApi = {\n  get:    ()        => request.get('/api/settings'),\n  update: (patch)   => request.put('/api/settings', patch)\n}\n"
+  }
+]

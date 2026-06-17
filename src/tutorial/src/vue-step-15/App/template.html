@@ -1,0 +1,65 @@
+<h2>一、基础插槽 — 自定义搜索区域</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p style="font-size: 12px; color: #666; margin: 0 0 8px;">父组件向 SearchBar 的默认插槽传入自定义内容：</p>
+  <ChildComp>
+    <input v-model="keyword" type="text" :placeholder="'搜索 ' + keyword" style="width: 100%; border: none; background: transparent; outline: none; font-size: 14px;" />
+  </ChildComp>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 父组件替换了默认插槽，插入了自己的 input，并绑定了父组件数据 keyword = "{{ keyword }}"
+  </p>
+</div>
+
+<h2>二、默认内容 — 不传 vs 传了</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <div style="margin-bottom: 10px;">
+    <p style="font-size: 12px; color: #666; margin: 0 0 4px;">不传插槽内容（使用组件内置的默认搜索框）：</p>
+    <ChildComp></ChildComp>
+  </div>
+  <div>
+    <p style="font-size: 12px; color: #666; margin: 0 0 4px;">传了插槽内容（被父组件自定义内容替换）：</p>
+    <ChildComp>
+      <span style="color: #999; font-size: 14px;">📍 当前城市: 北京 — 搜索附近好店</span>
+    </ChildComp>
+  </div>
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 &lt;slot&gt;默认内容&lt;/slot&gt; — 父组件不传时显示默认，传了就替换
+  </p>
+</div>
+
+<h2>三、具名插槽 — 同一组件，不同场景</h2>
+<div style="background: #fff8e1; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p style="font-size: 12px; color: #666; margin: 0 0 8px;">🏠 <strong>京东首页</strong>风格（logo + 搜索 + 购物车）：</p>
+  <div style="background: #e1251b; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;">
+    <ChildComp>
+      <template #left>
+        <span style="color: #e1251b; font-weight: bold; font-size: 14px; background: #fff; padding: 2px 6px; border-radius: 4px;">JD</span>
+      </template>
+      <input type="text" v-model="keyword" placeholder="搜索商品" style="width: 100%; border: none; background: transparent; outline: none; font-size: 14px;" />
+      <template #right>
+        <span style="font-size: 18px; cursor: pointer;">🛒</span>
+      </template>
+    </ChildComp>
+  </div>
+
+  <p style="font-size: 12px; color: #666; margin: 0 0 8px;">📂 <strong>分类页</strong>风格（返回 + 搜索 + 筛选）：</p>
+  <div style="background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 12px;">
+    <ChildComp>
+      <template #left>
+        <span style="font-size: 16px; cursor: pointer;">⬅️</span>
+      </template>
+      <input type="text" placeholder="搜索手机数码" style="width: 100%; border: none; background: transparent; outline: none; font-size: 14px;" />
+      <template #right>
+        <span style="font-size: 14px; color: #666; cursor: pointer;">筛选 ▾</span>
+      </template>
+    </ChildComp>
+  </div>
+
+  <p style="font-size: 12px; color: #666; margin: 0 0 8px;">✨ <strong>简洁模式</strong>（全部使用默认插槽内容）：</p>
+  <div style="margin-bottom: 8px;">
+    <ChildComp></ChildComp>
+  </div>
+
+  <p style="color: #888; font-size: 12px; margin: 8px 0 0;">
+    💡 同一个 SearchBar 组件，通过 #left / #right 具名插槽 + 默认插槽，组合出三种完全不同的样式！
+  </p>
+</div>

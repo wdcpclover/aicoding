@@ -1,0 +1,89 @@
+<h2>一、v-if / v-else</h2>
+<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <h3 v-if="awesome" style="color: #2e7d32; margin: 0;">Vue is awesome! ✨</h3>
+  <h3 v-else style="color: #c62828; margin: 0;">Oh no 😢</h3>
+  <button @click="awesome = !awesome" style="margin-top: 8px;">
+    Toggle (awesome: {{ awesome }})
+  </button>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 打开 F12 → Elements，切换时观察：v-if 为 false 时元素被移除，不是隐藏
+  </p>
+</div>
+
+<h2>二、v-else-if 多条件分支</h2>
+<div style="background: #f0f7ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <p><strong>分数：</strong>{{ score }}</p>
+  <input type="range" v-model.number="score" min="0" max="100" style="width: 100%;" />
+  <div v-if="score >= 90" style="padding: 8px; background: #e8f5e9; border-radius: 4px; margin-top: 8px;">
+    🏆 <strong>优秀</strong>（≥ 90）
+  </div>
+  <div v-else-if="score >= 70" style="padding: 8px; background: #e3f2fd; border-radius: 4px; margin-top: 8px;">
+    👍 <strong>良好</strong>（≥ 70）
+  </div>
+  <div v-else-if="score >= 60" style="padding: 8px; background: #fff3e0; border-radius: 4px; margin-top: 8px;">
+    😅 <strong>及格</strong>（≥ 60）
+  </div>
+  <div v-else style="padding: 8px; background: #fce4ec; border-radius: 4px; margin-top: 8px;">
+    😭 <strong>不及格</strong>（&lt; 60）
+  </div>
+</div>
+
+<h2>三、template 上的 v-if</h2>
+<div style="background: #f0fff4; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="showDetail = !showDetail">
+    {{ showDetail ? '隐藏' : '显示' }}详情
+  </button>
+  <template v-if="showDetail">
+    <h3 style="margin: 8px 0 4px;">用户详情</h3>
+    <p style="margin: 2px 0;">姓名：{{ userName }}</p>
+    <p style="margin: 2px 0;">角色：{{ userRole }}</p>
+    <p style="margin: 2px 0;">状态：在线</p>
+  </template>
+  <p v-else style="color: #888; margin-top: 8px;">（详情已折叠）</p>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 template 本身不会出现在 DOM 中，只起分组作用
+  </p>
+</div>
+
+<h2>四、v-show</h2>
+<div style="background: #fff8f0; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="showNotice = !showNotice">
+    切换通知 (v-show: {{ showNotice }})
+  </button>
+  <p v-show="showNotice" style="padding: 8px; background: #f3e5f5; border-radius: 4px; margin-top: 8px;">
+    📢 这是一条通知，使用 v-show 控制。隐藏时元素还在 DOM 中（display: none）
+  </p>
+  <p style="color: #888; font-size: 12px; margin-top: 8px;">
+    💡 打开 F12 查看：隐藏后元素仍存在，只是加了 display: none
+  </p>
+</div>
+
+<h2>五、v-if vs v-show 对比</h2>
+<div style="background: #f8f0ff; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+  <button @click="compareVisible = !compareVisible">
+    同时切换 ({{ compareVisible ? '显示中' : '隐藏中' }})
+  </button>
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <div style="flex: 1;">
+      <p style="font-size: 12px; color: #666; margin-bottom: 4px;"><strong>v-if 区块：</strong></p>
+      <div v-if="compareVisible" style="padding: 12px; background: #e3f2fd; border-radius: 4px; text-align: center;">
+        ✅ 存在于 DOM
+      </div>
+      <div v-else style="padding: 12px; background: #ffebee; border-radius: 4px; text-align: center; color: #999;">
+        ❌ 已从 DOM 移除
+      </div>
+    </div>
+    <div style="flex: 1;">
+      <p style="font-size: 12px; color: #666; margin-bottom: 4px;"><strong>v-show 区块：</strong></p>
+      <div v-show="compareVisible" style="padding: 12px; background: #e8f5e9; border-radius: 4px; text-align: center;">
+        ✅ 存在于 DOM
+      </div>
+      <div v-show="!compareVisible" style="padding: 12px; background: #fff3e0; border-radius: 4px; text-align: center; color: #999;">
+        🙈 元素还在，只是 display: none
+      </div>
+    </div>
+  </div>
+  <div style="background: #ede7f6; padding: 8px; border-radius: 4px; font-size: 12px; margin-top: 8px; color: #4527a0;">
+    📝 <strong>选择原则：</strong>频繁切换用 v-show（如 Tab），很少变化用 v-if（如权限控制）
+  </div>
+</div>

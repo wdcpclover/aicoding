@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>运算和条件判断</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; line-height: 1.8; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-line; }
+        button { padding: 8px 16px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>运算和条件判断</h1>
+    <div id="output" class="output"></div>
+
+    <h2>互动：成绩评级</h2>
+    <input type="number" id="scoreInput" placeholder="输入成绩（0-100）" min="0" max="100">
+    <button onclick="gradeScore()">评级</button>
+    <p id="gradeResult" class="output">输入成绩后点击评级</p>
+
+    <script>
+        let r = [];
+
+        // ====== 算术运算 ======
+        r.push('=== 算术运算 ===');
+        r.push('10 + 3 = ' + (10 + 3));
+        r.push('10 - 3 = ' + (10 - 3));
+        r.push('10 * 3 = ' + (10 * 3));
+        r.push('10 / 3 = ' + (10 / 3));
+        r.push('10 % 3 = ' + (10 % 3) + '（取余数）');
+
+        // ====== 比较运算 ======
+        r.push('\n=== 比较运算 ===');
+        r.push('5 > 3 → ' + (5 > 3));
+        r.push('5 < 3 → ' + (5 < 3));
+        r.push('5 >= 5 → ' + (5 >= 5));
+        r.push('5 === 5 → ' + (5 === 5) + '（严格相等，推荐用这个）');
+        r.push('5 === "5" → ' + (5 === '5') + '（类型不同，不相等）');
+        r.push('5 == "5" → ' + (5 == '5') + '（宽松相等，会自动转类型，不推荐）');
+        r.push('5 !== 3 → ' + (5 !== 3) + '（不等于）');
+
+        // ====== 逻辑运算 ======
+        r.push('\n=== 逻辑运算 ===');
+        r.push('true && true → ' + (true && true) + '（与：都为真才为真）');
+        r.push('true && false → ' + (true && false));
+        r.push('true || false → ' + (true || false) + '（或：有一个真就为真）');
+        r.push('!true → ' + (!true) + '（非：取反）');
+
+        // ====== if-else ======
+        r.push('\n=== if-else ===');
+        let age = 20;
+        if (age >= 18) {
+            r.push('age = ' + age + ' → 你是成年人');
+        } else {
+            r.push('age = ' + age + ' → 你是未成年人');
+        }
+
+        // ====== 三元运算符 ======
+        r.push('\n=== 三元运算符（简写的 if-else） ===');
+        let status = age >= 18 ? '成年' : '未成年';
+        r.push(`age >= 18 ? '成年' : '未成年' → ${status}`);
+
+        // ====== switch ======
+        r.push('\n=== switch ===');
+        let day = new Date().getDay();
+        let dayNames = ['日', '一', '二', '三', '四', '五', '六'];
+        r.push('今天是星期' + dayNames[day]);
+
+        document.getElementById('output').textContent = r.join('\n');
+
+        // 互动：成绩评级
+        function gradeScore() {
+            let score = Number(document.getElementById('scoreInput').value);
+            let grade;
+            if (score >= 90) {
+                grade = '优秀 🎉';
+            } else if (score >= 80) {
+                grade = '良好 👍';
+            } else if (score >= 70) {
+                grade = '中等 😊';
+            } else if (score >= 60) {
+                grade = '及格 😅';
+            } else {
+                grade = '不及格 😢';
+            }
+            document.getElementById('gradeResult').textContent = `成绩 ${score} 分 → ${grade}`;
+        }
+    </script>
+</body>
+</html>

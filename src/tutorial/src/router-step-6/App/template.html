@@ -1,0 +1,23 @@
+<h2>🛡️ 导航守卫</h2>
+
+<div class="status">
+  <span v-if="auth.isLoggedIn">
+    ✅ 已登录：<strong>{{ auth.username }}</strong>
+    <button class="btn btn-outline" @click="auth.logout()">退出登录</button>
+  </span>
+  <span v-else>⛔ 未登录</span>
+</div>
+
+<nav class="nav">
+  <RouterLink :to="{ name: 'home' }">首页</RouterLink>
+  <RouterLink :to="{ name: 'admin' }">后台（需登录）</RouterLink>
+  <RouterLink :to="{ name: 'login' }">登录</RouterLink>
+</nav>
+
+<div class="page">
+  <RouterView />
+</div>
+
+<p style="color: #888; font-size: 12px; margin-top: 12px;">
+  💡 未登录时点"后台"会被守卫拦截，重定向到登录页；登录后再去"后台"就能进，且登录页会跳回原本想去的地方。
+</p>

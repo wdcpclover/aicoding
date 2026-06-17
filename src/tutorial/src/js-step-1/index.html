@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第一段 JavaScript</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; padding: 20px; }
+        .output { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>第一段 JavaScript</h1>
+
+    <h2>1. 弹窗</h2>
+    <button onclick="alert('你好，JavaScript！')">点我弹窗</button>
+
+    <h2>2. 修改页面内容</h2>
+    <p id="demo">这段文字会被 JavaScript 修改。</p>
+    <button onclick="document.getElementById('demo').textContent = '我被 JavaScript 修改了！'">修改文字</button>
+
+    <h2>3. 控制台输出（按 F12 → Console 查看）</h2>
+    <button onclick="console.log('Hello from Console!')">输出到控制台</button>
+
+    <h2>4. 简单计算</h2>
+    <button onclick="document.getElementById('result').textContent = '1 + 1 = ' + (1 + 1)">计算 1 + 1</button>
+    <p id="result" class="output">点击按钮看结果</p>
+
+    <h2>5. 获取当前时间</h2>
+    <button onclick="document.getElementById('time').textContent = '当前时间：' + new Date().toLocaleString()">显示时间</button>
+    <p id="time" class="output">点击按钮显示时间</p>
+
+    <script>
+        console.log('页面已加载！打开 F12 → Console 可以看到这条消息。');
+    </script>
+</body>
+</html>

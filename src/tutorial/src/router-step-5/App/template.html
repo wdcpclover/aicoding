@@ -1,0 +1,16 @@
+<h2>🏷️ 命名路由与路由传参</h2>
+
+<nav class="nav">
+  <!-- 用 name 跳转，无需硬编码 path -->
+  <RouterLink :to="{ name: 'home' }">首页</RouterLink>
+  <RouterLink :to="{ name: 'user-detail', params: { id: 1 } }">用户 1</RouterLink>
+  <RouterLink :to="{ name: 'user-detail', params: { id: 2 } }">用户 2</RouterLink>
+</nav>
+
+<div class="page">
+  <RouterView />
+</div>
+
+<p style="color: #888; font-size: 12px; margin-top: 12px;">
+  💡 注意 UserDetail 组件的 template 里用的是 <code>{{ id }}</code>（props），不再依赖 <code>$route.params</code>。
+</p>

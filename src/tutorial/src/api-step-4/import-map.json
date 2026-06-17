@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "axios": "https://cdn.jsdelivr.net/npm/axios@1.7.7/+esm",
+    "pinia": "/pinia.esm-browser.js"
+  }
+}

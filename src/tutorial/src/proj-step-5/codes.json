@@ -1,0 +1,22 @@
+[
+  {
+    "name": "web/src/stores/auth.js",
+    "lang": "js",
+    "code": "// =============================================================\n//  stores/auth.js\n//  登录态：token（持久化到 localStorage）+ user 信息\n// =============================================================\n\nimport { defineStore } from 'pinia'\nimport { ref, computed } from 'vue'\nimport { authApi } from '../api/auth'\n\nconst TOKEN_KEY = 'chatbox_token'\n\nexport const useAuthStore = defineStore('auth', () => {\n  const token = ref(localStorage.getItem(TOKEN_KEY) || '')\n  const user = ref(null)\n\n  const isLoggedIn = computed(() => !!token.value && !!user.value)\n\n  function setToken(t) {\n    token.value = t\n    if (t) localStorage.setItem(TOKEN_KEY, t)\n    else localStorage.removeItem(TOKEN_KEY)\n  }\n\n  // 启动时调一次：如果 token 存在 → 调 /me 拿用户信息\n  async function restore() {\n    if (!token.value) return\n    try {\n      const { user: u } = await authApi.me()\n      user.value = u\n    } catch {\n      setToken('')\n      user.value = null\n    }\n  }\n\n  async function login(credentials) {\n    const { token: t, user: u } = await authApi.login(credentials)\n    setToken(t)\n    user.value = u\n    return u\n  }\n\n  async function register(credentials) {\n    const { token: t, user: u } = await authApi.register(credentials)\n    setToken(t)\n    user.value = u\n    return u\n  }\n\n  function logout() {\n    setToken('')\n    user.value = null\n  }\n\n  return { token, user, isLoggedIn, restore, login, register, logout }\n})\n"
+  },
+  {
+    "name": "web/src/router/index.js",
+    "lang": "js",
+    "code": "// =============================================================\n//  router/index.js\n//  路由 + 守卫：未登录 → /login；已登录访问 /login 或 /register → /chat\n// =============================================================\n\nimport { createRouter, createWebHashHistory } from 'vue-router'\nimport { useAuthStore } from '../stores/auth'\nimport { setUnauthorizedHandler } from '../api/request'\n\nconst routes = [\n  { path: '/',          redirect: '/chat' },\n  { path: '/login',     name: 'login',    component: () => import('../views/LoginView.vue'),    meta: { guest: true } },\n  { path: '/register',  name: 'register', component: () => import('../views/RegisterView.vue'), meta: { guest: true } },\n  { path: '/chat',      name: 'chat',     component: () => import('../views/ChatView.vue'),     meta: { auth: true } },\n  { path: '/settings',  name: 'settings', component: () => import('../views/SettingsView.vue'), meta: { auth: true } },\n  { path: '/:catchAll(.*)', redirect: '/chat' }\n]\n\nconst router = createRouter({\n  history: createWebHashHistory(),\n  routes\n})\n\nrouter.beforeEach((to, _from) => {\n  const auth = useAuthStore()\n  if (to.meta.auth && !auth.isLoggedIn) return { name: 'login', query: { redirect: to.fullPath } }\n  if (to.meta.guest && auth.isLoggedIn) return { name: 'chat' }\n})\n\n// 请求拦截器里 401 → 自动跳登录\nsetUnauthorizedHandler(() => {\n  if (router.currentRoute.value.name !== 'login') {\n    router.push({ name: 'login' })\n  }\n})\n\nexport default router\n"
+  },
+  {
+    "name": "web/src/main.js",
+    "lang": "js",
+    "code": "import { createApp } from 'vue'\nimport { createPinia } from 'pinia'\nimport App from './App.vue'\nimport router from './router'\nimport { useAuthStore } from './stores/auth'\nimport './assets/global.css'\n\nconst app = createApp(App)\napp.use(createPinia())\napp.use(router)\n\n// 启动前先从 localStorage 恢复登录态\nconst authStore = useAuthStore()\nauthStore.restore().finally(() => app.mount('#app'))\n"
+  },
+  {
+    "name": "web/src/App.vue",
+    "lang": "vue",
+    "code": "<script setup>\nimport { RouterView } from 'vue-router'\n</script>\n\n<template>\n  <RouterView />\n</template>\n"
+  }
+]
