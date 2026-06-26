@@ -1,0 +1,21 @@
+{
+  "name": "chatbox-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "教学用 Chatbox 后端：Express + SQLite + JWT + mock AI",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

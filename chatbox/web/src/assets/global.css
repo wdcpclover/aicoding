@@ -1,0 +1,91 @@
+/* =============================================================
+   全局样式 + 设计变量
+   ============================================================= */
+
+:root {
+  /* 色板 */
+  --bg-base:      #fafafa;
+  --bg-elevated:  #ffffff;
+  --bg-subtle:    #f4f4f5;
+  --bg-muted:     #e4e4e7;
+
+  /* 侧栏深色调（zinc 系，类 ChatGPT 视觉） */
+  --side-bg:        #18181b;
+  --side-bg-hover:  #27272a;
+  --side-bg-active: #3f3f46;
+  --side-border:    #27272a;
+  --side-text:      #e4e4e7;
+  --side-text-mute: #a1a1aa;
+  --side-text-dim:  #71717a;
+
+  /* 文字 */
+  --text:           #18181b;
+  --text-muted:     #52525b;
+  --text-dim:       #a1a1aa;
+
+  /* 边框 */
+  --border:         #e4e4e7;
+  --border-strong:  #d4d4d8;
+
+  /* 强调色（克制版紫蓝） */
+  --accent:         #4f46e5;
+  --accent-hover:   #4338ca;
+  --accent-light:   #eef2ff;
+
+  /* 状态 */
+  --success:        #10b981;
+  --warn:           #f59e0b;
+  --danger:         #ef4444;
+  --danger-bg:      #fef2f2;
+
+  /* 形状 */
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 14px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow:    0 4px 16px -4px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 50px -20px rgba(0, 0, 0, 0.18);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body, #app { height: 100%; margin: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+               'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.22); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* 侧栏内的滚动条用浅色 */
+.dark-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); }
+.dark-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.16); }

@@ -1,0 +1,6 @@
+node_modules/
+chatbox.db
+chatbox.db-journal
+chatbox.db-shm
+chatbox.db-wal
+.env
